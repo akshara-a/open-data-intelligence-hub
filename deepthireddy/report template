@@ -1,0 +1,30 @@
+# Athlete Career Analytics Project Report
+
+## 1. Introduction
+This project analyzes athlete career data to identify patterns and insights.
+
+## 2. Dataset
+- Source: `noc_regions.csv`
+- Records: [fill in after analysis]
+- Features: Region, Country, etc.
+
+## 3. Methodology
+- Tools: Python, Pandas, Matplotlib, Seaborn
+- Steps: Data cleaning → Exploration → Visualization → Insights
+
+## 4. Results
+- Key findings (e.g., most athletes come from [region])
+- Graphs and charts included in the notebook
+
+## 5. Conclusion
+Summarize insights and potential applications.
+
+## 6. Future Work
+- Extend dataset
+- Apply machine learning models
+- Build Streamlit dashboard
+
+## 7. References
+- Dataset source
+- Libraries used
+

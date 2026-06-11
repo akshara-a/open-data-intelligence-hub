@@ -1,0 +1,26 @@
+# Project Notebook: Athlete Career Analytics
+
+# 1. Import libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 2. Load dataset
+df = pd.read_csv("deepthireddy/noc_regions.csv")
+
+# 3. Explore dataset
+print(df.head())
+print(df.info())
+
+# 4. Basic analysis
+print("Number of rows:", len(df))
+print("Unique regions:", df['region'].nunique())
+
+# 5. Visualization
+plt.figure(figsize=(10,6))
+sns.countplot(data=df, x="region", order=df['region'].value_counts().index)
+plt.xticks(rotation=90)
+plt.title("Distribution of Athletes by Region")
+plt.show()
+
+
