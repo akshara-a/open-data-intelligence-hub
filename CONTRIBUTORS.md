@@ -34,4 +34,5 @@ Student contributor names can be added below as the projects are completed.
 | ---------------- | --------------- | ----------------------------------- |
 | To be updated    | G40 AI/ML Batch | Open Data Intelligence Hub projects |
 | Abhishek Chauhan | G40 AI/ML Batch | Economic Development Analytics     |
+| Varsha Chinnanarasannagari | G40 AI/ML Batch | Analyze and Predict Developer Salaries |
 
