@@ -34,4 +34,4 @@ Student contributor names can be added below as the projects are completed.
 | ---------------- | --------------- | ----------------------------------- |
 | To be updated    | G40 AI/ML Batch | Open Data Intelligence Hub projects |
 | Abhishek Chauhan | G40 AI/ML Batch | Economic Development Analytics     |
-
+| Eswar | G40 AI/ML Batch | Wildfire Risk Intelligence Engine |
