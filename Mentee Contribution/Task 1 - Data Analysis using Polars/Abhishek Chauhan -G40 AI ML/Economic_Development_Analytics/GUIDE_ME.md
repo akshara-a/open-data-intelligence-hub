@@ -82,7 +82,7 @@ pip install -r requirements.txt
 3. Pick the 9 countries and 12 indicators listed above
 4. Set time range: **2000 → 2024**
 5. Download as **CSV** → extract the zip → rename the data file to `WDI_data.csv`
-6. Place `WDD.csv` in the same folder as the notebook
+6. Place `WDI_data.csv` in the same folder as the notebook
 
 ### 3. Run the notebook
 
