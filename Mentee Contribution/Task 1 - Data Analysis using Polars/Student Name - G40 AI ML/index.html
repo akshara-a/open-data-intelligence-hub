@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIFA World Cup Analytics Engine</title>
+  <meta name="description" content="Comprehensive match outcome analysis and patterns from FIFA World Cup 1930–2014. 852 matches, 20 tournaments." />
+  <meta property="og:title" content="FIFA World Cup Analytics Engine" />
+  <meta property="og:description" content="Explore 84 years of World Cup history — goals, patterns, team records, and match outcomes." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="hero">
+      <div class="hero-text">
+        <div class="hero-badge">⚽ 1930 — 2014</div>
+        <h1>FIFA World Cup<br><span class="accent">Analytics Engine</span></h1>
+        <p>Comprehensive match outcome analysis &amp; patterns across 84 years of football history</p>
+      </div>
+      <div class="hero-stats" id="heroStats"></div>
+    </header>
+
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Analytics sections"></nav>
+
+    <main id="sections"></main>
+
+    <footer class="footer">
+      <p>Data source: <a href="https://www.kaggle.com/datasets/abecklas/fifa-world-cup" target="_blank" rel="noopener">Kaggle — FIFA World Cup by abecklas</a> · Covers 1930–2014 · 852 matches · 20 tournaments</p>
+      <p style="margin-top:6px;color:#37474f">Upload your own CSVs below to load full match data</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
