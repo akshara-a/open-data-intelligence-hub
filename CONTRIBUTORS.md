@@ -38,3 +38,4 @@ Student contributor names can be added below as the projects are completed.
 | Sumasri          | G40 AI/ML Batch | Biodiversity-Hotspot-Detection      |
 | Venkata Vivek | G40 AI/ML Batch | Global Earthquake Analytics Platform |
 | Manoj Kumar | G40 AI/ML Batch | Earthquake Trend Analytics |
+|Adarsh Pandey | G40AI|ML Batch| marine climate intelligence plateform|
