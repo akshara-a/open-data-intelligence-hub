@@ -35,6 +35,7 @@ Student contributor names can be added below as the projects are completed.
 | Lahari Prasanna | G40 AI/ML Batch | Developer Career Intelligence Warehouse |
 | Abhishek Chauhan | G40 AI/ML Batch | Economic Development Analytics     |
 | Varsha Chinnanarasannagari | G40 AI/ML Batch | Analyze and Predict Developer Salaries |
-| Sumasri          | G40 AI/ML Batch | Biodiversity-Hotspot-Detection      |
+| Sumasri | G40 AI/ML Batch | Biodiversity-Hotspot-Detection      |
 | Venkata Vivek | G40 AI/ML Batch | Global Earthquake Analytics Platform |
 | Manoj Kumar | G40 AI/ML Batch | Earthquake Trend Analytics |
+| Sruthi Doddi | G40 AI/ML Batch | Extreme Weather Intelligence Platform|
