@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salary Analytics Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Salary analytics dashboard</p>
+          <h1>Salary trends from software engineering survey data</h1>
+          <p class="hero-copy">
+            A polished business dashboard with clean spacing, classic colors, and interactive visual summaries built on the existing dataset.
+          </p>
+        </div>
+      </header>
+
+      <!-- Top summary cards removed per request -->
+
+      <!-- Full-width prediction panel inserted here -->
+      <section class="full-width-prediction">
+        <div class="panel-card prediction-full">
+          <div class="panel-header">
+            <p class="eyebrow">Salary prediction</p>
+            <h2>Instant salary estimator</h2>
+          </div>
+
+          <div id="resultCard" class="result-card large-result big-prediction hidden" aria-live="polite">
+            <h3>Estimated salary</h3>
+            <div class="result-display-row">
+              <p id="resultText">—</p>
+              <select id="currencySelect" class="currency-dropdown">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="GBP">GBP (£)</option>
+                <option value="INR">INR (₹)</option>
+                <option value="CAD">CAD ($)</option>
+                <option value="AUD">AUD ($)</option>
+              </select>
+            </div>
+            <div class="small-note">Use the form to estimate salary based on Country, Remote work style and Years of experience.</div>
+            
+            <div id="trajectoryChart" class="trajectory-chart"></div>
+
+            <button id="downloadPdfBtn" type="button" class="btn-secondary" style="margin-top: 16px;">Download PDF Report</button>
+          </div>
+
+          <div id="errorCard" class="error-card hidden" aria-live="assertive">
+            <h3>Error</h3>
+            <p id="errorText">—</p>
+          </div>
+
+          <form id="predictionForm" class="prediction-form prediction-full-form">
+            <div class="form-row">
+              <div class="form-col">
+                <label for="countrySelect">Country</label>
+                <select id="countrySelect" required>
+                  <option value="">Loading countries...</option>
+                </select>
+              </div>
+              <div class="form-col">
+                <label for="remoteWorkSelect">Remote work style</label>
+                <select id="remoteWorkSelect" required>
+                  <option value="">Loading options...</option>
+                </select>
+              </div>
+              <div class="form-col small-col">
+                <label for="yearsInput">Years</label>
+                <input id="yearsInput" type="number" step="0.1" min="0" placeholder="e.g. 5" required />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button id="predictButton" type="submit">Estimate salary</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="dashboard-main">
+          <section class="chart-card">
+            <div class="chart-card-header">
+              <h2>Top 10 countries by average salary</h2>
+            </div>
+            <div id="topCountriesChart" class="chart-panel"></div>
+          </section>
+            <!-- Removed salary distribution and mini top-countries cards as requested -->
+        </div>
+
+        <aside class="dashboard-side">
+
+          <section class="panel-card stats-panel">
+            <h3>Dataset snapshot</h3>
+            <dl>
+              <div>
+                <dt>Total records</dt>
+                <dd id="recordsCount">23,435</dd>
+              </div>
+              <div>
+                <dt>Unique countries</dt>
+                <dd id="countryCount">166</dd>
+              </div>
+              <div>
+                <dt>Remote categories</dt>
+                <dd id="remoteCount">3</dd>
+              </div>
+              <div>
+                <dt>Average salary</dt>
+                <dd id="averageSalary">$86,155</dd>
+              </div>
+            </dl>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
