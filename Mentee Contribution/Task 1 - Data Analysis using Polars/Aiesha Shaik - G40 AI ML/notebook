@@ -1,0 +1,13 @@
+import polars as pl
+
+# Load dataset
+df = pl.read_csv("SDG_COUNTRY.csv")
+
+# Display first 5 rows
+print(df.head())
+
+# Dataset information
+print(df.shape)
+
+# Summary statistics
+print(df.describe())
