@@ -37,4 +37,5 @@ Student contributor names can be added below as the projects are completed.
 | Varsha Chinnanarasannagari | G40 AI/ML Batch | Analyze and Predict Developer Salaries |
 | Sumasri          | G40 AI/ML Batch | Biodiversity-Hotspot-Detection      |
 | Venkata Vivek | G40 AI/ML Batch | Global Earthquake Analytics Platform |
-| Manoj Kumar | G40 AI/ML Batch | Earthquake Trend Analytics |
+| Manoj Kumar | G40 AI/ML Batch | Earthquake Trend Analytics 
+|Atit Patel | G40 AIML| Sports performance warehouse
