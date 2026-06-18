@@ -48,7 +48,8 @@ jobs:
             if (buttonVisible) {
               console.log("App was asleep, clicking wake-up button...");
               await wakeButton.click();
-              await page.waitForTimeout(20000);
+              await page.waitForLoadState("networkidle", { timeout: 60000 }).catch(() => {});
+              await page.waitForTimeout(15000);
             } else {
               console.log("App was already awake.");
             }
