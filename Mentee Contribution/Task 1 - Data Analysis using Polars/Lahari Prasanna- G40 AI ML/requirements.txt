@@ -1,4 +1,0 @@
-polars
-plotly
-streamlit
-pyarrow
