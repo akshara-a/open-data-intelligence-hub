@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bank Customer Churn Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="#">Bank Churn</a>
+      </div>
+    </nav>
+
+    <main class="container my-5">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card shadow-sm mb-4">
+            <div class="card-body">
+              <h3 class="card-title mb-3">Predict Customer Churn</h3>
+              <form method="post" id="predict-form">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Credit Score</label>
+                    <input type="number" class="form-control" name="CreditScore" required min="300" max="900">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Geography</label>
+                    <select class="form-select" name="Geography" required>
+                      <option value="France">France</option>
+                      <option value="Spain">Spain</option>
+                      <option value="Germany">Germany</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Gender</label>
+                    <select class="form-select" name="Gender" required>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Age</label>
+                    <input type="number" class="form-control" name="Age" required min="18" max="100">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Tenure (years)</label>
+                    <input type="number" class="form-control" name="Tenure" required min="0" max="15">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Balance</label>
+                    <input type="number" step="0.01" class="form-control" name="Balance" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Num of Products</label>
+                    <input type="number" class="form-control" name="NumOfProducts" required min="1" max="4">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Has Credit Card</label>
+                    <select class="form-select" name="HasCrCard" required>
+                      <option value="1">Yes</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Is Active Member</label>
+                    <select class="form-select" name="IsActiveMember" required>
+                      <option value="1">Yes</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-label">Estimated Salary</label>
+                    <input type="number" step="0.01" class="form-control" name="EstimatedSalary" required>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                  <button type="submit" class="btn btn-primary">Predict Churn</button>
+                  <div class="text-muted small">Model: Random Forest (saved)</div>
+                </div>
+              </form>
+
+              {% if model_error %}
+              <div class="alert alert-warning mt-3" role="alert">
+                {{ model_error }}
+              </div>
+              {% endif %}
+
+              {% if prediction is not none %}
+              <div class="mt-4">
+                <h5>Prediction</h5>
+                <div class="p-3 rounded bg-white shadow-sm">
+                  <p class="mb-2"><strong>Churn:</strong> {{ 'Yes' if prediction == 1 else 'No' }}</p>
+                  <p class="mb-2"><strong>Probability:</strong> {{ '{:.2%}'.format(probability) }}</p>
+                  <div class="progress" style="height:18px;">
+                    <div class="progress-bar" role="progressbar" style="width: {{ '{:.1f}'.format(probability*100) }}%" aria-valuenow="{{ probability*100 }}" aria-valuemin="0" aria-valuemax="100">{{ '{:.1f}'.format(probability*100) }}%</div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Model Evaluation</h5>
+              {% if eval_results %}
+                <ul class="list-group list-group-flush">
+                  {% for r in eval_results %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <span>{{ r['model'] }}</span>
+                      <span class="badge bg-secondary">ROC AUC: {{ '%.3f'|format(r['roc_auc']) }}</span>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="text-muted">No evaluation results available. Run training first.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card shadow-sm mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Model Visualizations</h5>
+              <div class="row g-3">
+                {% for img in images %}
+                  <div class="col-6">
+                    <div class="img-thumb">
+                      <img src="{{ img }}" class="img-fluid rounded shadow-sm" alt="model image">
+                    </div>
+                  </div>
+                {% endfor %}
+                {% if images|length == 0 %}
+                  <p class="text-muted">No images found. Run training to generate ROC and feature importance plots.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Quick Tips</h5>
+              <ul>
+                <li>Use realistic customer values for better predictions.</li>
+                <li>Run `python src/models/train_model.py` to retrain model.</li>
+                <li>Check `src/models/model_evaluation_results.csv` for detailed metrics.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-center py-4 text-muted">
+      Bank Customer Churn Prediction • Portfolio Project
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

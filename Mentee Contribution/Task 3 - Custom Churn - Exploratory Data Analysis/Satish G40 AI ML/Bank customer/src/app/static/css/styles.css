@@ -1,0 +1,40 @@
+body {
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+.img-thumb {
+    height: 160px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    padding: 6px
+}
+
+.img-thumb img {
+    max-height: 150px;
+    object-fit: contain
+}
+
+.progress {
+    background: #e9ecef
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #0d6efd, #0ea5e9)
+}
+
+@media (max-width: 767px) {
+    .img-thumb {
+        height: 120px
+    }
+}
