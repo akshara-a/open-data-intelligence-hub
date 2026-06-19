@@ -1,0 +1,318 @@
+import time
+import requests
+import pandas as pd
+import streamlit as st
+import plotly.express as px
+
+st.set_page_config(
+    page_title="Global Poverty Intelligence Platform",
+    layout="wide"
+)
+
+st.title("Global Poverty Intelligence Platform")
+st.subheader("Analysing poverty reduction trends using World Bank Data")
+
+INDICATORS = {
+    "Poverty Headcount National": "SI.POV.NAHC",
+    "Poverty Headcount $2.15/day": "SI.POV.DDAY",
+    "GDP per Capita": "NY.GDP.PCAP.CD",
+    "Population": "SP.POP.TOTL",
+    "Unemployment": "SL.UEM.TOTL.ZS",
+    "Gini Index": "SI.POV.GINI"
+}
+
+
+@st.cache_data(ttl=3600)
+def fetch_world_bank_data(indicator):
+    records = []
+    last_error = None
+    total_pages = 1
+
+    for page in range(1, 100):
+        url = f"https://api.worldbank.org/v2/country/all/indicator/{indicator}"
+        params = {
+            "format": "json",
+            "per_page": 1000,
+            "page": page
+        }
+
+        data = None
+
+        for attempt in range(3):
+            try:
+                response = requests.get(url, params=params, timeout=30)
+
+                if response.status_code in [500, 502, 503, 504]:
+                    last_error = f"World Bank API temporary error: {response.status_code}"
+                    time.sleep(2)
+                    continue
+
+                response.raise_for_status()
+                data = response.json()
+                break
+
+            except requests.exceptions.RequestException as error:
+                last_error = str(error)
+                time.sleep(2)
+
+        if data is None:
+            break
+
+        if len(data) < 2 or data[1] is None:
+            break
+
+        metadata = data[0]
+        total_pages = metadata.get("pages", 1)
+
+        for item in data[1]:
+            value = item.get("value")
+
+            if value is not None:
+                records.append({
+                    "country": item["country"]["value"],
+                    "country_code": item.get("countryiso3code", ""),
+                    "year": int(item["date"]),
+                    "value": value
+                })
+
+        if page >= total_pages:
+            break
+
+    df = pd.DataFrame(records)
+
+    if df.empty:
+        return df, last_error
+
+    df["value"] = pd.to_numeric(df["value"], errors="coerce")
+    df = df.dropna(subset=["value"])
+
+    # Remove zero values so charts show only meaningful available values.
+    df = df[df["value"] > 0]
+
+    return df, None
+
+
+selected_indicator_name = st.sidebar.selectbox(
+    "Select Indicator",
+    list(INDICATORS.keys())
+)
+
+indicator_code = INDICATORS[selected_indicator_name]
+
+with st.spinner("Loading data from World Bank API..."):
+    df, error_message = fetch_world_bank_data(indicator_code)
+
+if df.empty:
+    st.error("Data could not be loaded right now.")
+    if error_message:
+        st.warning(error_message)
+    st.info("Please refresh the page after some time. World Bank API may be temporarily unavailable.")
+    st.stop()
+
+st.success("Data loaded successfully from World Bank API")
+
+countries = sorted(df["country"].unique())
+
+default_countries = ["India", "China", "Bangladesh", "Nigeria"]
+available_defaults = [country for country in default_countries if country in countries]
+
+selected_countries = st.sidebar.multiselect(
+    "Select Countries",
+    countries,
+    default=available_defaults
+)
+
+if not selected_countries:
+    st.warning("Please select at least one country.")
+    st.stop()
+
+min_year = int(df["year"].min())
+max_year = int(df["year"].max())
+
+year_range = st.sidebar.slider(
+    "Select Year Range",
+    min_year,
+    max_year,
+    (min_year, max_year)
+)
+
+filtered_df = df[
+    (df["country"].isin(selected_countries)) &
+    (df["year"] >= year_range[0]) &
+    (df["year"] <= year_range[1])
+]
+
+if filtered_df.empty:
+    st.warning("No non-zero data available for the selected countries and year range.")
+    st.stop()
+
+st.write("Preview of selected country data")
+st.dataframe(
+    filtered_df.sort_values(["country", "year"]).head(20),
+    use_container_width=True
+)
+
+st.subheader("Poverty Trend Over Time")
+
+line_chart = px.line(
+    filtered_df.sort_values("year"),
+    x="year",
+    y="value",
+    color="country",
+    markers=True,
+    title=f"{selected_indicator_name} Trend by Country"
+)
+
+line_chart.update_layout(
+    xaxis_title="Year",
+    yaxis_title="Value"
+)
+
+st.plotly_chart(line_chart, use_container_width=True)
+
+st.subheader("Latest Country Comparison")
+
+latest_df = (
+    filtered_df
+    .sort_values("year")
+    .groupby("country", as_index=False)
+    .tail(1)
+)
+
+if not latest_df.empty:
+    latest_df["label"] = latest_df["value"].apply(lambda x: f"{x:.2f}")
+
+    bar_chart = px.bar(
+        latest_df,
+        x="country",
+        y="value",
+        color="country",
+        text="label",
+        title="Latest Available Non-Zero Value by Country"
+    )
+
+    bar_chart.update_traces(textposition="outside")
+    bar_chart.update_layout(
+        xaxis_title="Country",
+        yaxis_title="Value"
+    )
+
+    st.plotly_chart(bar_chart, use_container_width=True)
+
+    st.write("Latest available non-zero data used for each country")
+    st.dataframe(
+        latest_df[["country", "year", "value"]].sort_values("country"),
+        use_container_width=True
+    )
+else:
+    st.warning("No latest non-zero values available for selected countries.")
+
+st.subheader("Poverty Reduction Ranking")
+
+reduction_data = []
+
+for country in selected_countries:
+    country_df = filtered_df[
+        filtered_df["country"] == country
+    ].sort_values("year")
+
+    if len(country_df) >= 2:
+        first_value = country_df.iloc[0]["value"]
+        latest_value = country_df.iloc[-1]["value"]
+        reduction = first_value - latest_value
+
+        reduction_data.append({
+            "country": country,
+            "first_year": country_df.iloc[0]["year"],
+            "latest_year": country_df.iloc[-1]["year"],
+            "initial_poverty": first_value,
+            "latest_poverty": latest_value,
+            "poverty_reduction": reduction
+        })
+
+reduction_df = pd.DataFrame(reduction_data)
+
+if not reduction_df.empty:
+    reduction_df = reduction_df.sort_values(
+        "poverty_reduction",
+        ascending=False
+    )
+
+    st.dataframe(reduction_df, use_container_width=True)
+
+    reduction_chart = px.bar(
+        reduction_df,
+        x="country",
+        y="poverty_reduction",
+        color="country",
+        text=reduction_df["poverty_reduction"].round(2),
+        title="Poverty Reduction by Country"
+    )
+
+    reduction_chart.update_traces(textposition="outside")
+    reduction_chart.update_layout(
+        xaxis_title="Country",
+        yaxis_title="Poverty Reduction"
+    )
+
+    st.plotly_chart(reduction_chart, use_container_width=True)
+else:
+    st.warning("Not enough non-zero data to calculate poverty reduction.")
+
+st.subheader("Key Insights")
+
+if not reduction_df.empty:
+    best_country = reduction_df.iloc[0]
+    worst_country = reduction_df.iloc[-1]
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric(
+            label="Highest Poverty Reduction",
+            value=best_country["country"],
+            delta=f"{best_country['poverty_reduction']:.2f}"
+        )
+
+    with col2:
+        st.metric(
+            label="Initial Poverty",
+            value=f"{best_country['initial_poverty']:.2f}"
+        )
+
+    with col3:
+        st.metric(
+            label="Latest Poverty",
+            value=f"{best_country['latest_poverty']:.2f}"
+        )
+
+    if worst_country["poverty_reduction"] < 0:
+        st.warning(
+            f"{worst_country['country']} shows an increase from "
+            f"{worst_country['initial_poverty']:.2f} to "
+            f"{worst_country['latest_poverty']:.2f}."
+        )
+
+    st.success(
+        f"{best_country['country']} shows the strongest reduction from "
+        f"{best_country['initial_poverty']:.2f} to "
+        f"{best_country['latest_poverty']:.2f}."
+    )
+else:
+    st.info("Select countries with at least two non-zero data points to generate insights.")
+
+st.subheader("Conclusion")
+
+st.write(
+    "The analysis shows that poverty levels have changed differently across countries. "
+    "Some countries show strong poverty reduction, while others show slower progress or an increase. "
+    "The platform removes missing values and zero-value records, so the visualizations show only "
+    "countries with meaningful available values."
+)
+
+st.subheader("Future Scope")
+
+st.write(
+    "Future improvements can include regional analysis, poverty forecasting, map visualization, "
+    "and comparison with GDP, unemployment, education, and population indicators."
+)
