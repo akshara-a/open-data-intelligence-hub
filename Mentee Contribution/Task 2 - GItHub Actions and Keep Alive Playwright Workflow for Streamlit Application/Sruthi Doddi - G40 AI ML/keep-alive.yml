@@ -1,0 +1,63 @@
+name: Keep Streamlit App Awake
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+jobs:
+  wake-app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install chromium
+
+      - name: Open Streamlit app
+        env:
+          APP_URL: ${{ secrets.STREAMLIT_APP_URL }}
+        run: |
+          if [ -z "$APP_URL" ]; then
+            echo "❌ STREAMLIT_APP_URL secret is missing"
+            exit 1
+          fi
+
+          node <<EOF
+          const { chromium } = require('playwright');
+
+          (async () => {
+            const url = process.env.APP_URL;
+            console.log(\`🔍 Opening \${url}\`);
+
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage();
+            await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForTimeout(5000);
+
+            const wakeButton = await page.getByRole('button', { name: /Yes, get this app back up!/i });
+            if (await wakeButton.count() > 0) {
+              console.log('⚠️ App was sleeping – clicking wake button');
+              await wakeButton.click();
+              await page.waitForTimeout(10000);
+            } else {
+              console.log('✅ App was already awake');
+            }
+
+            const title = await page.title();
+            console.log(\`📄 Page title: \${title}\`);
+            await browser.close();
+            console.log('✨ Keep-alive check completed');
+          })();
+          EOF
