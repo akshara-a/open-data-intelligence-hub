@@ -1,0 +1,38 @@
+# Customer Churn Exploratory Data Analysis
+
+## Objective
+
+The objective of this project is to perform Exploratory Data Analysis (EDA) on a customer churn dataset and identify factors that influence customer retention and churn.
+
+## Dataset
+
+Telco Customer Churn Dataset
+
+## Tools Used
+
+* Python
+* Pandas
+* Matplotlib
+* Seaborn
+* VS Code
+
+## Analysis Performed
+
+* Dataset Inspection
+* Missing Value Analysis
+* Churn Distribution Analysis
+* Tenure Distribution Analysis
+* Monthly Charges Analysis
+* Correlation Heatmap
+* Customer Churn Pattern Exploration
+
+## Key Findings
+
+* Most customers remain with the company.
+* Customers with higher monthly charges show a higher tendency to churn.
+* Customers with longer tenure are more likely to stay.
+* Contract type and billing patterns influence churn behavior.
+
+## Conclusion
+
+EDA helped identify important patterns and customer characteristics associated with churn, providing useful insights for future predictive modeling.
