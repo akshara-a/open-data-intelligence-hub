@@ -1,4 +1,3 @@
-category,record_count,total_sales,average_sales,total_profit,profit_margin
-Furniture,2121,741999.8,349.83,18451.27,2.49
-Office Supplies,6026,719047.03,119.32,122490.8,17.04
-Technology,1847,836154.03,452.71,145454.95,17.4
+version https://git-lfs.github.com/spec/v1
+oid sha256:53c4a3beb7a5ee703963b9ec5ddd3a3273836d74174380749e08a4833427b55b
+size 221
