@@ -1,0 +1,13 @@
+import joblib
+import os
+
+# Create a folder to store models
+os.makedirs("models", exist_ok=True)
+
+# Save all trained models
+joblib.dump(reg_model, "models/regression_model.pkl")
+joblib.dump(log_model, "models/logistic_model.pkl")
+joblib.dump(kmeans, "models/kmeans_model.pkl")
+joblib.dump(scaler, "models/scaler.pkl")
+
+print("All models saved successfully!")

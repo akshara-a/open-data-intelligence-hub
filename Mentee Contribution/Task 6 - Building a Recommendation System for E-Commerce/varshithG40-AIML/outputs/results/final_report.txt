@@ -1,0 +1,98 @@
+======================================================================
+E-COMMERCE RECOMMENDATION SYSTEM — FINAL REPORT
+======================================================================
+
+
+1. REGRESSION — RATING PREDICTION
+----------------------------------------
+
+Linear Regression:
+  MAE: 0.6375
+  MSE: 0.6083
+  RMSE: 0.7800
+  R2_Score: 0.0829
+
+Ridge Regression:
+  MAE: 0.6375
+  MSE: 0.6083
+  RMSE: 0.7800
+  R2_Score: 0.0829
+
+  -> Ridge Regression performs equally or better due to regularization.
+
+  Business Impact: Rating prediction helps recommend products
+  that users are likely to rate highly, improving user satisfaction.
+
+
+2. CLASSIFICATION — PURCHASE PREDICTION
+----------------------------------------
+  Accuracy: 0.8270
+  Precision: 0.6509
+  Recall: 0.4911
+  F1_Score: 0.5598
+  ROC_AUC: 0.8476
+
+  Business Impact: Purchase prediction enables personalized
+  recommendations, targeted discounts, and cart recovery campaigns.
+
+
+3. CLUSTERING — CUSTOMER SEGMENTATION
+----------------------------------------
+  Number of Clusters: 4
+  Inertia: 3165.43
+  Silhouette Score: 0.1574
+
+  Cluster Profiles:
+         Browsing_Time  Previous_Purchases  Average_Rating  Total_Spending  Cart_Addition_Count  Discount_Usage  Size  Size_Pct
+Cluster                                                                                                                        
+0                 8.21                5.55            3.78         1458.91                 1.36            0.65   175      22.0
+1                16.20                4.53            3.48         1312.74                 1.56            0.44   127      15.9
+2                 7.45                4.54            3.40         1285.07                 0.93            0.33   256      32.1
+3                 9.54                5.39            3.56         2611.66                 3.16            0.46   239      30.0
+
+  Business Impact: Customer segmentation enables targeted
+  marketing, loyalty programs, and personalized experiences.
+
+
+4. HYPERPARAMETER TUNING RESULTS
+----------------------------------------
+
+  Ridge Regression Best Alpha: {'alpha': 50.0}
+  Logistic Regression Best Params: {'C': 1.0, 'max_iter': 500, 'penalty': 'l1', 'solver': 'saga'}
+  K-Means Best Config: n_clusters=2, init=k-means++
+
+
+5. BUSINESS GOAL ALIGNMENT
+----------------------------------------
+                       Business Goal                          ML Approach
+   Recommend products users may like       Regression (Rating Prediction)
+Predict whether a user will purchase Classification (Logistic Regression)
+             Group similar customers                 Clustering (K-Means)
+          Improve campaign targeting          Classification + Clustering
+           Increase sales conversion Recommendation + Purchase Prediction
+         Improve customer experience         Personalized recommendations
+
+
+6. CONCLUSION
+----------------------------------------
+
+The e-commerce recommendation system combines regression, classification,
+and clustering to solve different business problems:
+
+• Regression models predict user ratings, enabling the platform to
+  recommend products that users are likely to enjoy.
+
+• Logistic regression predicts purchase likelihood, helping identify
+  users who are ready to buy and enabling targeted marketing.
+
+• K-Means clustering segments customers into distinct groups, allowing
+  the business to tailor strategies for each segment.
+
+By tuning hyperparameters, model performance was optimized for each task.
+The combination of these models provides a comprehensive recommendation
+system that can improve customer experience, increase conversion rates,
+and drive revenue growth.
+
+======================================================================
+END OF REPORT
+======================================================================

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Recommendation & ML Analytics Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <span>E-Commerce</span>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#overview" class="menu-item active" onclick="switchTab('overview')">
+                    <i class="fa-solid fa-gauge-high"></i> Overview & Stats
+                </a>
+                <a href="#eda" class="menu-item" onclick="switchTab('eda')">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> Exploratory Data
+                </a>
+                <a href="#predictions" class="menu-item" onclick="switchTab('predictions')">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> ML Predictions
+                </a>
+                <a href="#segmentation" class="menu-item" onclick="switchTab('segmentation')">
+                    <i class="fa-solid fa-users-gear"></i> Customer Segments
+                </a>
+                <a href="#evaluation" class="menu-item" onclick="switchTab('evaluation')">
+                    <i class="fa-solid fa-circle-check"></i> Model Comparison
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <span>ML Pipeline Active</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Window -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1 id="tab-title-text">Dashboard Overview</h1>
+                    <p class="subtitle">E-Commerce Intelligence & AI Recommendation Engine</p>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                    <div class="profile-info">
+                        <span class="name">ML Administrator</span>
+                        <span class="role">Lead Data Scientist</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- TAB 1: OVERVIEW -->
+            <section id="tab-overview" class="dashboard-tab active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon yellow"><i class="fa-solid fa-database"></i></div>
+                        <div class="stat-details">
+                            <h3>Total Records</h3>
+                            <p class="value">{{ stats.num_records }}</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fa-solid fa-users"></i></div>
+                        <div class="stat-details">
+                            <h3>Unique Customers</h3>
+                            <p class="value">{{ stats.unique_users }}</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fa-solid fa-bag-shopping"></i></div>
+                        <div class="stat-details">
+                            <h3>Products Catalog</h3>
+                            <p class="value">{{ stats.unique_products }}</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fa-solid fa-dollar-sign"></i></div>
+                        <div class="stat-details">
+                            <h3>Avg Customer Spending</h3>
+                            <p class="value">{{ stats.avg_spending }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overview-grid">
+                    <div class="overview-info-card">
+                        <h2>E-Commerce Recommendation System</h2>
+                        <p>This intelligent decision engine leverages advanced supervised and unsupervised machine learning algorithms to map and optimize user actions across the platform.</p>
+                        
+                        <div class="feature-bullets">
+                            <div class="bullet-item">
+                                <div class="bullet-num">1</div>
+                                <div>
+                                    <h4>Rating Prediction (Regression)</h4>
+                                    <p>Predicts target product satisfaction using Ridge Regression to curate recommended products.</p>
+                                </div>
+                            </div>
+                            <div class="bullet-item">
+                                <div class="bullet-num">2</div>
+                                <div>
+                                    <h4>Purchase Propensity (Classification)</h4>
+                                    <p>Computes realtime purchase likelihood to trigger contextual discounts or recovery emails.</p>
+                                </div>
+                            </div>
+                            <div class="bullet-item">
+                                <div class="bullet-num">3</div>
+                                <div>
+                                    <h4>Customer Segments (Clustering)</h4>
+                                    <p>Segments buyers based on aggregate browsing and spending behaviors using K-Means Clustering.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card heatmap-container">
+                        <h3>Platform Interaction Correlation</h3>
+                        <div class="plot-frame">
+                            <img src="{{ url_for('static', filename='plots/correlation_heatmap.png') }}" alt="Correlation Heatmap">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: EXPLORATORY DATA ANALYSIS -->
+            <section id="tab-eda" class="dashboard-tab">
+                <div class="gallery-filters">
+                    <button class="filter-btn active" onclick="filterGallery('all')">All Analyses</button>
+                    <button class="filter-btn" onclick="filterGallery('distributions')">Distributions</button>
+                    <button class="filter-btn" onclick="filterGallery('behaviors')">User Behaviors</button>
+                    <button class="filter-btn" onclick="filterGallery('categories')">Category Performance</button>
+                </div>
+
+                <div class="gallery-grid">
+                    <!-- Distribution Plots -->
+                    <div class="gallery-card" data-category="distributions">
+                        <div class="plot-wrapper">
+                            <img src="{{ url_for('static', filename='plots/rating_distribution.png') }}" alt="Rating Distribution">
+                        </div>
+                        <div class="gallery-info">
+                            <h4>Product Rating Distribution</h4>
+                            <p>Illustrates user rating frequency and density on the platform.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-card" data-category="distributions">
+                        <div class="plot-wrapper">
+                            <img src="{{ url_for('static', filename='plots/price_distribution.png') }}" alt="Price Distribution">
+                        </div>
+                        <div class="gallery-info">
+                            <h4>Pricing Spread</h4>
+                            <p>Price profile distribution across all listed catalog products.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-card" data-category="distributions">
+                        <div class="plot-wrapper">
+                            <img src="{{ url_for('static', filename='plots/age_distribution.png') }}" alt="Age Distribution">
+                        </div>
+                        <div class="gallery-info">
+                            <h4>Customer Demographics (Age)</h4>
+                            <p>Age frequency representation of customer database.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-card" data-category="distributions">
+                        <div class="plot-wrapper">
+                            <img src="{{ url_for('static', filename='plots/browsing_time_distribution.png') }}" alt="Browsing Time Distribution">
+                        </div>
+                        <div class="gallery-info">
+                            <h4>Browsing Time Spread</h4>
+                            <p>Distribution of time spent per product view.</p>
+                        </div>
+                    </div>
+
+                    <!-- Behaviors Plots -->
+                    <div class="gallery-card" data-category="behaviors">
+                        <div class="plot-wrapper">
+                            <img src="{{ url_for('static', filename='plots/browsing_vs_purchase.png') }}" alt="Browsing vs Purchase">
+                        </div>
+                        <div class="gallery-info">
+                            <h4>Browsing vs. Final Purchase</h4>
+                            <p>Correlating browsing time (mins) to purchased vs. not purchased items.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-card" data-category="behaviors">
+                        <div class="plot-wrapper">
+                            <img src="{{ url_for('static', filename='plots/purchase_by_discount.png') }}" alt="Purchase by Discount">
+                        </div>
+                        <div class="gallery-info">
+                            <h4>Discount Impact on Purchase Rate</h4>
+                            <p>A direct comparison of conversion rates with and without discounts applied.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-card" data-category="behaviors">
+                        <div class="plot-wrapper">
+                            <img src="{{ url_for('static', filename='plots/spending_distribution.png') }}" alt="Spending Distribution">
+                        </div>
+                        <div class="gallery-info">
+                            <h4>Total Customer Spend Spread</h4>
+                            <p>Identifies high-spenders vs. regular transactional cohorts.</p>
+                        </div>
+                    </div>
+
+                    <!-- Category Plots -->
+                    <div class="gallery-card" data-category="categories">
+                        <div class="plot-wrapper">
+                            <img src="{{ url_for('static', filename='plots/purchases_by_category.png') }}" alt="Purchases by Category">
+                        </div>
+                        <div class="gallery-info">
+                            <h4>Total Volume by Product Category</h4>
+                            <p>Visualizing total volume sales count per segment category.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-card" data-category="categories">
+                        <div class="plot-wrapper">
+                            <img src="{{ url_for('static', filename='plots/avg_rating_by_category.png') }}" alt="Average Rating by Category">
+                        </div>
+                        <div class="gallery-info">
+                            <h4>Average Category Rating</h4>
+                            <p>Compares customer feedback quality scores between different categories.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: PREDICTIONS -->
+            <section id="tab-predictions" class="dashboard-tab">
+                <div class="prediction-container">
+                    <!-- Form 1: Regression (Predict Rating) -->
+                    <div class="pred-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                            <h3>Rating Prediction Engine (Regression)</h3>
+                        </div>
+                        <form id="rating-form" onsubmit="submitRatingPrediction(event)">
+                            <div class="form-group">
+                                <label for="reg-category">Product Category</label>
+                                <select id="reg-category" required>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Clothing">Clothing</option>
+                                    <option value="Books">Books</option>
+                                    <option value="Home & Kitchen">Home & Kitchen</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Beauty">Beauty</option>
+                                    <option value="Toys">Toys</option>
+                                    <option value="Grocery">Grocery</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-price">Price ($)</label>
+                                    <input type="number" id="reg-price" min="1" max="1000" value="75" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-browse">Browsing Time (mins)</label>
+                                    <input type="number" id="reg-browse" min="1" max="60" value="12" step="0.1" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-prev">Previous Purchases</label>
+                                    <input type="number" id="reg-prev" min="0" max="30" value="3" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-age">Customer Age</label>
+                                    <input type="number" id="reg-age" min="18" max="100" value="32" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-spending">Total Spending ($)</label>
+                                    <input type="number" id="reg-spending" min="0" max="10000" value="250" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-discount">Discount Applied</label>
+                                    <select id="reg-discount" required>
+                                        <option value="0">No Discount</option>
+                                        <option value="1">Discount Applied</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-predict">Calculate Expected Rating</button>
+                        </form>
+
+                        <div id="rating-result" class="result-box hidden">
+                            <span class="result-label">Predicted Customer Rating</span>
+                            <div class="result-value-container">
+                                <span class="result-number" id="predicted-rating-value">0.0</span>
+                                <span class="stars" id="predicted-stars"></span>
+                            </div>
+                            <p class="result-explanation">This rating indicates the customer's predicted level of satisfaction with this item based on price, category, and historical loyalty.</p>
+                        </div>
+                    </div>
+
+                    <!-- Form 2: Classification (Predict Purchase) -->
+                    <div class="pred-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <h3>Purchase Propensity Model (Classification)</h3>
+                        </div>
+                        <form id="purchase-form" onsubmit="submitPurchasePrediction(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="clf-price">Product Price ($)</label>
+                                    <input type="number" id="clf-price" min="1" max="1000" value="49.99" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="clf-browse">Browsing Time (mins)</label>
+                                    <input type="number" id="clf-browse" min="1" max="60" value="15" step="0.1" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="clf-rating">Product Rating</label>
+                                    <input type="number" id="clf-rating" min="1.0" max="5.0" value="4.2" step="0.1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="clf-prev">Previous Purchases</label>
+                                    <input type="number" id="clf-prev" min="0" max="30" value="5" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="clf-spending">Total Spending ($)</label>
+                                    <input type="number" id="clf-spending" min="0" max="10000" value="450" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="clf-cart">Added to Cart?</label>
+                                    <select id="clf-cart" required>
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="clf-discount">Discount Status</label>
+                                <select id="clf-discount" required>
+                                    <option value="0">Standard Pricing</option>
+                                    <option value="1">Discount Applied</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-predict purple">Analyze Purchase Probability</button>
+                        </form>
+
+                        <div id="purchase-result" class="result-box hidden">
+                            <span class="result-label">Purchase Propensity Results</span>
+                            <div class="result-value-container">
+                                <span class="result-number" id="purchase-prob-value">0%</span>
+                                <span class="badge" id="purchase-likelihood-badge">LIKELY</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="purchase-progress"></div>
+                            </div>
+                            <p class="result-explanation">The customer has an estimated <span id="explain-prob">0%</span> likelihood of completing the purchase for this transaction session.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: CUSTOMER SEGMENTS -->
+            <section id="tab-segmentation" class="dashboard-tab">
+                <div class="segment-grid">
+                    <div class="card pca-card">
+                        <h3>Customer Segmentation Scatter (PCA Projection)</h3>
+                        <div class="plot-frame large">
+                            <img src="{{ url_for('static', filename='plots/clustering_pca.png') }}" alt="Customer Segmentation PCA">
+                        </div>
+                    </div>
+
+                    <div class="card segments-summary-card">
+                        <h3>K-Means Segment Profiles</h3>
+                        <div class="table-container">
+                            <table class="dashboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Cohort Segment Name</th>
+                                        <th>Avg Browse</th>
+                                        <th>Prev Buy</th>
+                                        <th>Avg Rating</th>
+                                        <th>Total Spend</th>
+                                        <th>Cart Adds</th>
+                                        <th>Discount %</th>
+                                        <th>Cohort Size</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in profiles %}
+                                    <tr>
+                                        <td class="bold-cell"><span class="color-dot c-{{ p.Cluster }}"></span> {{ p.Segment_Name }}</td>
+                                        <td>{{ p.Browsing_Time }}m</td>
+                                        <td>{{ p.Previous_Purchases }}</td>
+                                        <td>{{ p.Average_Rating }}★</td>
+                                        <td class="green-text">${{ p.Total_Spending }}</td>
+                                        <td>{{ p.Cart_Addition_Count }}</td>
+                                        <td>{{ (p.Discount_Usage * 100)|round(1) }}%</td>
+                                        <td><span class="badge-size">{{ p.Size }} ({{ p.Size_Pct }}%)</span></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="profile-info-bullets">
+                            <div class="info-bullet">
+                                <span class="badge-bullet c-0">Discount-Sensitive</span>
+                                <p>Customers highly responsive to promotional codes and discount events (avg 65% discount rate).</p>
+                            </div>
+                            <div class="info-bullet">
+                                <span class="badge-bullet c-1">Active Browsers</span>
+                                <p>Highly engaged visitors (avg 16 mins browsing time) but maintain a low final checkout rate.</p>
+                            </div>
+                            <div class="info-bullet">
+                                <span class="badge-bullet c-2">Casual Shoppers</span>
+                                <p>Minimal engagement sessions with lower spend indexes. Standard traffic segment.</p>
+                            </div>
+                            <div class="info-bullet">
+                                <span class="badge-bullet c-3">Premium Buyers</span>
+                                <p>High spending habits, frequent cart additions, and highest customer lifetime value ($2,611+ avg spending).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: MODEL COMPARISON & TUNING -->
+            <section id="tab-evaluation" class="dashboard-tab">
+                <div class="overview-grid">
+                    <div class="card full-width">
+                        <h3>Model Comparison Matrix</h3>
+                        <div class="table-container">
+                            <table class="dashboard-table center-table">
+                                <thead>
+                                    <tr>
+                                        <th>Model Algorithm</th>
+                                        <th>Machine Learning Task</th>
+                                        <th>MAE</th>
+                                        <th>RMSE</th>
+                                        <th>R² Score</th>
+                                        <th>Accuracy</th>
+                                        <th>F1 Score</th>
+                                        <th>ROC-AUC</th>
+                                        <th>Silhouette Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="bold-cell">Linear Regression</td>
+                                        <td>Rating Prediction</td>
+                                        <td>0.6375</td>
+                                        <td>0.7800</td>
+                                        <td>0.0829</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr class="highlighted-row">
+                                        <td class="bold-cell">Ridge Regression (Tuned)</td>
+                                        <td>Rating Prediction</td>
+                                        <td>0.6375</td>
+                                        <td>0.7800</td>
+                                        <td>0.0829</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr class="highlighted-row">
+                                        <td class="bold-cell">Logistic Regression (Tuned)</td>
+                                        <td>Purchase Likelihood</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>82.70%</td>
+                                        <td>55.98%</td>
+                                        <td>84.76%</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bold-cell">K-Means Clustering</td>
+                                        <td>Customer Segmentation</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>0.1574</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tuning-grid">
+                    <div class="card">
+                        <h3>Hyperparameter Tuning Impact (Before vs After)</h3>
+                        <div class="plot-frame">
+                            <img src="{{ url_for('static', filename='plots/tuning_before_after.png') }}" alt="Tuning Comparison">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Model Performance Metrics Summary</h3>
+                        <div class="plot-frame">
+                            <img src="{{ url_for('static', filename='plots/model_comparison.png') }}" alt="Model Comparison Plot">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function switchTab(tabId) {
+            // Update active menu item
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Hide all tabs
+            document.querySelectorAll('.dashboard-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab
+            const activeTab = document.getElementById('tab-' + tabId);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+
+            // Update header title
+            const tabTitleMap = {
+                'overview': 'Dashboard Overview',
+                'eda': 'Exploratory Data Analysis',
+                'predictions': 'Realtime Model Predictions',
+                'segmentation': 'Customer Segments & Cohorts',
+                'evaluation': 'Model Optimization & Evaluation'
+            };
+            document.getElementById('tab-title-text').innerText = tabTitleMap[tabId] || 'Dashboard';
+        }
+
+        function filterGallery(category) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Filter gallery items
+            document.querySelectorAll('.gallery-card').forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        async function submitRatingPrediction(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Calculating...';
+            btn.disabled = true;
+
+            const payload = {
+                Category: document.getElementById('reg-category').value,
+                Price: document.getElementById('reg-price').value,
+                Browsing_Time: document.getElementById('reg-browse').value,
+                Previous_Purchases: document.getElementById('reg-prev').value,
+                Age: document.getElementById('reg-age').value,
+                Total_Spending: document.getElementById('reg-spending').value,
+                Discount_Applied: document.getElementById('reg-discount').value
+            };
+
+            try {
+                const response = await fetch('/api/predict/rating', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    const val = result.predicted_rating;
+                    document.getElementById('predicted-rating-value').innerText = val + " / 5.0";
+                    
+                    // Render star string
+                    let starsHTML = '';
+                    const fullStars = Math.floor(val);
+                    const halfStar = val % 1 >= 0.4 ? 1 : 0;
+                    for(let i=0; i<5; i++) {
+                        if(i < fullStars) {
+                            starsHTML += '<i class="fa-solid fa-star"></i>';
+                        } else if(i === fullStars && halfStar) {
+                            starsHTML += '<i class="fa-solid fa-star-half-stroke"></i>';
+                        } else {
+                            starsHTML += '<i class="fa-regular fa-star"></i>';
+                        }
+                    }
+                    document.getElementById('predicted-stars').innerHTML = starsHTML;
+                    document.getElementById('rating-result').classList.remove('hidden');
+                } else {
+                    alert("Error: " + result.error);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                btn.innerHTML = 'Calculate Expected Rating';
+                btn.disabled = false;
+            }
+        }
+
+        async function submitPurchasePrediction(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Analyzing Propensity...';
+            btn.disabled = true;
+
+            const payload = {
+                Price: document.getElementById('clf-price').value,
+                Browsing_Time: document.getElementById('clf-browse').value,
+                Rating: document.getElementById('clf-rating').value,
+                Previous_Purchases: document.getElementById('clf-prev').value,
+                Total_Spending: document.getElementById('clf-spending').value,
+                Cart_Addition: document.getElementById('clf-cart').value,
+                Discount_Applied: document.getElementById('clf-discount').value
+            };
+
+            try {
+                const response = await fetch('/api/predict/purchase', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    const prob = result.purchase_probability;
+                    const likelihood = result.purchase_likelihood;
+                    
+                    document.getElementById('purchase-prob-value').innerText = prob + "%";
+                    document.getElementById('explain-prob').innerText = prob + "%";
+                    
+                    const badge = document.getElementById('purchase-likelihood-badge');
+                    badge.innerText = likelihood === "Yes" ? "HIGH PROPENSITY" : "LOW PROPENSITY";
+                    badge.className = "badge " + (likelihood === "Yes" ? "likely" : "unlikely");
+                    
+                    const progress = document.getElementById('purchase-progress');
+                    progress.style.width = prob + "%";
+                    progress.style.backgroundColor = likelihood === "Yes" ? "#55A868" : "#DD8452";
+                    
+                    document.getElementById('purchase-result').classList.remove('hidden');
+                } else {
+                    alert("Error: " + result.error);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                btn.innerHTML = 'Analyze Purchase Probability';
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
