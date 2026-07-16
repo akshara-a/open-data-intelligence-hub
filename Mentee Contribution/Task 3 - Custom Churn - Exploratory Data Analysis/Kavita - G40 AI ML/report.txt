@@ -1,0 +1,23 @@
+# Mini Project 1: Data Cleaning and EDA Report
+
+## 1. Project Overview
+This project focuses on conducting an Exploratory Data Analysis (EDA) on a Telco Customer Churn dataset to identify key factors influencing customer attrition and provide data-driven business insights.
+
+## 2. Data Cleaning & Preprocessing Summary
+- **Data Types Corrected:** The `TotalCharges` column was converted from an object type to a numeric type to handle empty string spaces.
+- **Missing Values:** Missing entries found in `TotalCharges` after conversion were successfully imputed using the column's median value.
+- **Duplicates:** The dataset was checked for duplicate records to ensure data integrity.
+
+## 3. Key Business Insights & Visualizations
+
+### Insight 1: Overall Churn Distribution (Ref: churn_distribution.png)
+- **Observation:** Around 26% of the total customer base has churned.
+- **Business Impact:** High attrition rates indicate potential customer dissatisfaction or aggressive competitor offers.
+
+### Insight 2: Impact of Contract Type (Ref: churn_by_contract.png)
+- **Observation:** Customers on a **Month-to-month** contract show a drastically higher churn rate compared to those on one-year or two-year contracts.
+- **Recommendation:** The business should launch targeted campaigns offering discounts or loyalty perks to transition short-term users onto annual contracts.
+
+### Insight 3: Tenure vs. Churn Analysis (Ref: tenure_vs_churn.png)
+- **Observation:** The boxplot indicates that churned customers have a significantly lower median tenure (often dropping out within the first 6–12 months).
+- **Recommendation:** Implement a robust customer onboarding program and enhance customer support proactive engagement during the initial critical 6 months.

@@ -1,0 +1,55 @@
+name: Streamlit Keep Alive
+
+on:
+  schedule:
+    # Runs every 6 hours
+    - cron: "0 */6 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install --with-deps
+
+      - name: Visit Streamlit App
+        run: |
+          node <<'EOF'
+          const { chromium } = require('playwright');
+
+          (async () => {
+            const browser = await chromium.launch({
+              headless: true
+            });
+
+            const page = await browser.newPage();
+
+            await page.goto(
+              "https://appkeepaliveworkflow-hjhjdhjhjgyt.streamlit.app",
+              {
+                waitUntil: "networkidle",
+                timeout: 60000
+              }
+            );
+
+            console.log("App is alive!");
+
+            await browser.close();
+          })();
+          EOF
