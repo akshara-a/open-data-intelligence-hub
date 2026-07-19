@@ -1,0 +1,61 @@
+{
+  "highest_revenue_segment": {
+    "name": "High-Value Premium Customers",
+    "revenue": 6295222.03,
+    "percentage": 62.2,
+    "customers": 2316
+  },
+  "highest_churn_risk": {
+    "name": "Non-Buyers",
+    "customers": 3883,
+    "percentage": 46.0,
+    "risk_factors": [
+      "No purchases",
+      "Low engagement",
+      "High cart abandonment"
+    ]
+  },
+  "loyalty_reward_targets": {
+    "primary": "High-Value Premium Customers",
+    "secondary": "High-Engagement Explorers"
+  },
+  "discount_responsive": {
+    "primary": "Non-Buyers",
+    "secondary": "High-Engagement Explorers"
+  },
+  "reengagement_targets": {
+    "primary": "Non-Buyers",
+    "secondary": "High-Engagement Explorers"
+  },
+  "premium_recommendations": {
+    "primary": "High-Value Premium Customers",
+    "secondary": "High-Engagement Explorers"
+  },
+  "action_plan": {
+    "Segment": {
+      "0": "High-Value Customers",
+      "1": "High-Engagement Explorers",
+      "2": "Non-Buyers"
+    },
+    "Strategy": {
+      "0": "Retain & Upsell",
+      "1": "Convert to Loyal",
+      "2": "Reactivate"
+    },
+    "Primary Actions": {
+      "0": "VIP Program, Early Access, Personalization",
+      "1": "Cart Recovery, Free Shipping, Recommendations",
+      "2": "Welcome Discounts, Abandoned Cart Emails"
+    },
+    "Expected ROI": {
+      "0": "High",
+      "1": "Medium-High",
+      "2": "Medium"
+    },
+    "Priority": {
+      "0": 1,
+      "1": 2,
+      "2": 3
+    }
+  }
+}

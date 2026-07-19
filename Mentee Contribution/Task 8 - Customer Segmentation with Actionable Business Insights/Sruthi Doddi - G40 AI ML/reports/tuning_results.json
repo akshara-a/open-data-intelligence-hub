@@ -1,0 +1,39 @@
+{
+  "ridge_regression": {
+    "best_params": {
+      "solver": "svd",
+      "alpha": 5.0
+    },
+    "before_tuning": {
+      "r2": 0.9242139818320196,
+      "rmse": 511.43067155728363,
+      "mae": 303.4745758807427
+    },
+    "after_tuning": {
+      "r2": 0.9241349664054826,
+      "rmse": 511.69721402708,
+      "mae": 303.3485723988774
+    }
+  },
+  "logistic_regression": {
+    "best_params": {
+      "solver": "saga",
+      "penalty": "l2",
+      "C": 1.0
+    },
+    "before_tuning": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "roc_auc": 1.0
+    },
+    "after_tuning": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "roc_auc": 1.0
+    }
+  }
+}

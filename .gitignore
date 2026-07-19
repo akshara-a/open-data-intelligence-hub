@@ -1,5 +1,30 @@
-��
+# Virtual environments
 venv/
+.venv/
+env/
+
+# Python cache
 __pycache__/
+*.py[cod]
+
+# Jupyter
 .ipynb_checkpoints/
 *.pyc
+
+# Large trained model artifacts
+*.pkl
+
+# Environment variables
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Streamlit secrets
+.streamlit/secrets.toml

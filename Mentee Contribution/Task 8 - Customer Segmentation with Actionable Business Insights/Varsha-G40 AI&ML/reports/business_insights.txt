@@ -1,0 +1,60 @@
+BUSINESS INSIGHTS
+
+1. High Value Customers
+
+• High Monetary Value
+• High Purchase Frequency
+• High Income
+
+Recommendation:
+Offer premium membership and exclusive rewards.
+
+--------------------------------------------------
+
+2. Loyal Customers
+
+• Purchase regularly
+• Good spending habits
+
+Recommendation:
+Provide loyalty points and personalized offers.
+
+--------------------------------------------------
+
+3. New Customers
+
+• Low purchase history
+• Recent customers
+
+Recommendation:
+Offer welcome discounts and onboarding campaigns.
+
+--------------------------------------------------
+
+4. At-Risk Customers
+
+• High Recency
+• Low Frequency
+
+Recommendation:
+Run re-engagement campaigns with personalized emails.
+
+--------------------------------------------------
+
+5. Budget Customers
+
+• Low income
+• Low spending
+
+Recommendation:
+Offer discounts and bundle products.
+
+--------------------------------------------------
+
+Overall Business Recommendation
+
+Increase marketing investment on High Value and Loyal Customers.
+
+Reduce customer churn using personalized campaigns.
+
+Use RFM segmentation for targeted marketing.

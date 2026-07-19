@@ -1,0 +1,49 @@
+{
+  "logistic_regression": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "roc_auc": 1.0,
+    "confusion_matrix": [
+      [
+        860,
+        0
+      ],
+      [
+        0,
+        829
+      ]
+    ]
+  },
+  "feature_importance": {
+    "Feature": {
+      "0": "total_purchases",
+      "10": "purchase_rate",
+      "6": "avg_order_value",
+      "7": "avg_session_value",
+      "5": "total_sessions",
+      "2": "total_pages_viewed",
+      "3": "total_time_on_site",
+      "4": "total_cart_abandoned",
+      "8": "pages_per_session",
+      "9": "time_per_session_min",
+      "1": "avg_rating",
+      "11": "abandon_rate"
+    },
+    "Coefficient": {
+      "0": 5.194764112694595,
+      "10": 4.02894666805606,
+      "6": 1.8307615566237583,
+      "7": 0.6327713420934475,
+      "5": 0.6260337685787125,
+      "2": 0.2858500359643277,
+      "3": 0.21265611481314203,
+      "4": -0.09490292808584971,
+      "8": -0.16503542687492653,
+      "9": -0.1885093382994947,
+      "1": -0.1927135944622767,
+      "11": -0.22323060939972628
+    }
+  }
+}

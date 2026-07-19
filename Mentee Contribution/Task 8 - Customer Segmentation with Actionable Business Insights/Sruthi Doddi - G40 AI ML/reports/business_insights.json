@@ -1,0 +1,63 @@
+{
+  "cluster_0": {
+    "name": " Non-Buyers / Low Engagement",
+    "size": 3883,
+    "percentage": 46.0,
+    "revenue_contribution": 132386.11,
+    "characteristics": [
+      "Average revenue: $34 (very low)",
+      "Average purchases: 0.06 (almost none)",
+      "High cart abandonment: 1.08",
+      "Low sessions: 2.10",
+      "High rating: 4.01 (they rate but don't buy)"
+    ],
+    "business_actions": [
+      " Send targeted promotional emails to convert visitors to buyers",
+      " Offer first-purchase discounts (e.g., 20% off first order)",
+      " Implement cart abandonment recovery emails",
+      " Simplify checkout process to reduce friction",
+      " Showcase best-selling products to build trust"
+    ]
+  },
+  "cluster_1": {
+    "name": " High-Value Premium Customers",
+    "size": 2316,
+    "percentage": 27.4,
+    "revenue_contribution": 6295222.03,
+    "characteristics": [
+      "Average revenue: $2,718 (HIGHEST)",
+      "Average purchases: 1.34 (highest frequency)",
+      "Low cart abandonment: 0.51",
+      "Average sessions: 2.57",
+      "Lower rating: 3.84 (they are more critical)"
+    ],
+    "business_actions": [
+      " Create VIP loyalty program with exclusive perks",
+      " Offer early access to new products and sales",
+      " Send personalized product recommendations based on history",
+      " Request reviews and feedback to improve experience",
+      " Provide premium customer support (dedicated line)"
+    ]
+  },
+  "cluster_2": {
+    "name": " High-Engagement Explorers",
+    "size": 2243,
+    "percentage": 26.6,
+    "revenue_contribution": 3688560.92,
+    "characteristics": [
+      "Average revenue: $1,644 (moderate)",
+      "Average purchases: 1.01",
+      "Highest cart abandonment: 2.29",
+      "Highest sessions: 4.85 (very active)",
+      "Highest pages viewed: 63.41",
+      "Rating: 3.96"
+    ],
+    "business_actions": [
+      " Send cart abandonment reminders with time-sensitive offers",
+      " Analyze browsing behavior for product recommendations",
+      " Target with personalized product suggestions",
+      " Improve site navigation to reduce abandonment",
+      " Offer free shipping on next purchase to convert"
+    ]
+  }
+}

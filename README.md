@@ -76,5 +76,6 @@ By completing these projects, participants will learn:
 ---
 
 ## Repository Goal
+## Submitted Project
 
 Transform open datasets into actionable insights using modern, high-performance analytics with Polars, while showcasing the practical project work of the **G40 AI/ML Batch students of SURE Trust**.
