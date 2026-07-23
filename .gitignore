@@ -1,30 +1,38 @@
-# Virtual environments
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environments
 venv/
 .venv/
 env/
 
-# Python cache
-__pycache__/
-*.py[cod]
-
-# Jupyter
+# Jupyter Notebook Checkpoints
 .ipynb_checkpoints/
-*.pyc
 
-# Large trained model artifacts
-*.pkl
-
-# Environment variables
-.env
-.env.*
-
-# IDE
+# VS Code
 .vscode/
+
+# PyCharm
 .idea/
 
-# Operating system files
+# macOS
 .DS_Store
+
+# Windows
 Thumbs.db
 
-# Streamlit secrets
-.streamlit/secrets.toml
+# Model Cache
+*.joblib
+
+# Large Dataset Backups (optional)
+*.zip
+*.tar.gz
+
+# Python cache
+.pytest_cache/
+
+# Temporary files
+*.tmp
+*.log
