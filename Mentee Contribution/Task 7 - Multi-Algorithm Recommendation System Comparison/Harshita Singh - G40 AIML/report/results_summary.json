@@ -1,0 +1,139 @@
+{
+  "raw_shape": [
+    6040,
+    10
+  ],
+  "duplicates": 40,
+  "missing_before": {
+    "User_ID": 0,
+    "Product_ID": 0,
+    "Product_Category": 0,
+    "Rating": 60,
+    "Price": 0,
+    "Purchase_Status": 0,
+    "Number_of_Views": 0,
+    "Cart_Status": 0,
+    "Time_Spent": 120,
+    "Previous_Purchases": 0
+  },
+  "clean_shape": [
+    6000,
+    10
+  ],
+  "regression": {
+    "best_alpha": 0.01,
+    "baseline": {
+      "MAE": 0.5506837193322859,
+      "RMSE": 0.6659878560889902,
+      "R2": 0.12278415590865244
+    },
+    "tuned": {
+      "MAE": 0.5506756856279412,
+      "RMSE": 0.6659868782828444,
+      "R2": 0.12278673177067789
+    },
+    "features": [
+      "Price",
+      "Number_of_Views",
+      "Time_Spent",
+      "Previous_Purchases",
+      "Cart_Status",
+      "Product_Category_Books",
+      "Product_Category_Electronics",
+      "Product_Category_Fashion",
+      "Product_Category_Home & Kitchen",
+      "Product_Category_Sports"
+    ]
+  },
+  "classification": {
+    "best_params": {
+      "C": 1,
+      "max_iter": 100,
+      "solver": "liblinear"
+    },
+    "baseline": {
+      "Accuracy": 0.7616666666666667,
+      "Precision": 0.5338983050847458,
+      "Recall": 0.21428571428571427,
+      "F1": 0.3058252427184466
+    },
+    "tuned": {
+      "Accuracy": 0.7625,
+      "Precision": 0.5378151260504201,
+      "Recall": 0.21768707482993196,
+      "F1": 0.3099273607748184
+    },
+    "confusion_matrix": [
+      [
+        851,
+        55
+      ],
+      [
+        230,
+        64
+      ]
+    ],
+    "features": [
+      "Price",
+      "Number_of_Views",
+      "Cart_Status",
+      "Time_Spent",
+      "Previous_Purchases",
+      "Rating",
+      "Product_Category_Books",
+      "Product_Category_Electronics",
+      "Product_Category_Fashion",
+      "Product_Category_Home & Kitchen",
+      "Product_Category_Sports"
+    ]
+  },
+  "clustering": {
+    "best_k": 2,
+    "inertia_by_k": {
+      "2": 7870.62346437926,
+      "3": 6799.321720131651,
+      "4": 6096.567850682687,
+      "5": 5513.595056204878,
+      "6": 5031.509024039166
+    },
+    "silhouette_by_k": {
+      "2": 0.3000579932815947,
+      "3": 0.19173218617552865,
+      "4": 0.18358911971272,
+      "5": 0.17963897119227393,
+      "6": 0.18843998280747745
+    },
+    "final_inertia": 7870.62346437926,
+    "final_silhouette": 0.3000579932815947,
+    "cluster_sizes": {
+      "0": 1304,
+      "1": 581
+    },
+    "cluster_profile": {
+      "0": {
+        "Number_of_Views": 17.61,
+        "Number_of_Purchases": 0.35,
+        "Avg_Rating": 3.35,
+        "Avg_Time_Spent": 3.68,
+        "Total_Amount_Spent": 7.92,
+        "Num_Added_to_Cart": 0.95
+      },
+      "1": {
+        "Number_of_Views": 32.94,
+        "Number_of_Purchases": 1.75,
+        "Avg_Rating": 3.49,
+        "Avg_Time_Spent": 3.97,
+        "Total_Amount_Spent": 56.92,
+        "Num_Added_to_Cart": 2.62
+      }
+    },
+    "features": [
+      "Number_of_Views",
+      "Number_of_Purchases",
+      "Avg_Rating",
+      "Avg_Time_Spent",
+      "Total_Amount_Spent",
+      "Num_Added_to_Cart"
+    ]
+  }
+}
