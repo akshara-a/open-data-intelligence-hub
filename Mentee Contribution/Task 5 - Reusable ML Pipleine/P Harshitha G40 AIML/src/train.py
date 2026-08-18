@@ -1,74 +1,179 @@
+import os
 import pandas as pd
 import joblib
 
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.ensemble import RandomForestClassifier
 
-from data_loader import load_data
-from preprocessing import preprocess_data
-from feature_engineering import feature_engineering
 
-# Load data
-df = load_data("data/customer_churn.csv")
+# ============================================================
+# PROJECT PATHS
+# ============================================================
 
-# Check original dataset
-print("Columns in Dataset:")
-print(df.columns)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-print("\nFirst 5 Rows of Original Dataset:")
+DATA_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "customer_churn.csv"
+)
+
+MODEL_PATH = os.path.join(
+    BASE_DIR,
+    "models",
+    "churn_model.pkl"
+)
+
+
+# ============================================================
+# LOAD DATASET
+# ============================================================
+
+df = pd.read_csv(DATA_PATH)
+
+print("Dataset shape:", df.shape)
+
+print("\nFirst 5 rows:")
 print(df.head())
 
-# Preprocess
-df = preprocess_data(df)
-
-# Feature Engineering
-df = feature_engineering(df)
-
-# Remove customerID if present
-if 'customerID' in df.columns:
-    df = df.drop('customerID', axis=1)
-
-# DO NOT convert everything to numeric using errors='coerce'
-# Remove these lines if they exist:
-# for col in df.columns:
-#     df[col] = pd.to_numeric(df[col], errors='coerce')
-
-# Check for missing values
-print("\nMissing Values:")
+print("\nMissing values:")
 print(df.isnull().sum())
 
-# Print data types
-print("\nData Types:")
-print(df.dtypes)
 
-# Print transformed dataset
-print("\nFirst 5 Rows After Preprocessing:")
-print(df.head())
+# ============================================================
+# REMOVE UNNECESSARY ID COLUMN
+# ============================================================
 
-# Separate features and target
-X = df.drop('Churn', axis=1)
-y = df['Churn']
+id_columns = ["CustomerID", "customerID"]
 
-# Train-test split
+for column in id_columns:
+    if column in df.columns:
+        df = df.drop(column, axis=1)
+
+
+# ============================================================
+# SEPARATE FEATURES AND TARGET
+# ============================================================
+
+X = df.drop("Churn", axis=1)
+y = df["Churn"]
+
+
+# ============================================================
+# IDENTIFY NUMERICAL AND CATEGORICAL FEATURES
+# ============================================================
+
+numeric_features = X.select_dtypes(
+    include=["int64", "float64"]
+).columns.tolist()
+
+categorical_features = X.select_dtypes(
+    include=["object", "category"]
+).columns.tolist()
+
+print("\nNumerical features:")
+print(numeric_features)
+
+print("\nCategorical features:")
+print(categorical_features)
+
+
+# ============================================================
+# NUMERICAL PREPROCESSING PIPELINE
+# ============================================================
+
+numeric_pipeline = Pipeline(
+    steps=[
+        ("imputer", SimpleImputer(strategy="median")),
+        ("scaler", StandardScaler())
+    ]
+)
+
+
+# ============================================================
+# CATEGORICAL PREPROCESSING PIPELINE
+# ============================================================
+
+categorical_pipeline = Pipeline(
+    steps=[
+        ("imputer", SimpleImputer(strategy="most_frequent")),
+        ("encoder", OneHotEncoder(handle_unknown="ignore"))
+    ]
+)
+
+
+# ============================================================
+# COMBINE NUMERICAL AND CATEGORICAL PIPELINES
+# ============================================================
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("num", numeric_pipeline, numeric_features),
+        ("cat", categorical_pipeline, categorical_features)
+    ]
+)
+
+
+# ============================================================
+# COMPLETE REUSABLE ML PIPELINE
+# ============================================================
+
+model_pipeline = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        (
+            "model",
+            RandomForestClassifier(
+                n_estimators=100,
+                random_state=42
+            )
+        )
+    ]
+)
+
+
+# ============================================================
+# TRAIN-TEST SPLIT
+# ============================================================
+
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
     test_size=0.2,
-    random_state=42
+    random_state=42,
+    stratify=y
 )
 
-# Pipeline
-pipeline = Pipeline([
-    ('scaler', StandardScaler()),
-    ('model', LogisticRegression(max_iter=1000))
-])
+print("\nTraining samples:", len(X_train))
+print("Testing samples:", len(X_test))
 
-# Train model
-pipeline.fit(X_train, y_train)
 
-# Save model
-joblib.dump(pipeline, "models/churn_model.pkl")
+# ============================================================
+# TRAIN THE PIPELINE
+# ============================================================
 
-print("\nModel trained and saved successfully!")
+model_pipeline.fit(X_train, y_train)
+
+
+# ============================================================
+# SAVE COMPLETE REUSABLE PIPELINE
+# ============================================================
+
+os.makedirs(
+    os.path.dirname(MODEL_PATH),
+    exist_ok=True
+)
+
+joblib.dump(
+    model_pipeline,
+    MODEL_PATH
+)
+
+
+print("\nReusable ML pipeline trained successfully!")
+print("Model saved successfully at:")
+print(MODEL_PATH)
