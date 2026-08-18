@@ -1,0 +1,5 @@
+Model,Objective,Baseline Performance,Tuned Performance,Selected Model
+K-Means,Customer segmentation,-,Silhouette = 0.418,Yes
+Linear Regression,Predict CustomerRating,"RMSE=0.660, R2=0.224",-,No
+Ridge Regression,Predict CustomerRating,"RMSE=0.660, R2=0.224","RMSE=0.659, R2=0.225",Yes
+Logistic Regression,Predict PurchaseLikelihood,"F1=0.821, ROC-AUC=0.824","F1=0.821, ROC-AUC=0.824",Yes
