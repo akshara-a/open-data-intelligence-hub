@@ -1,7 +1,0 @@
-CNN 2 Evaluation Results
-==================================================
-
-Accuracy  : 0.5839
-Precision : 0.6252
-Recall    : 0.5839
-F1-score  : 0.5677
