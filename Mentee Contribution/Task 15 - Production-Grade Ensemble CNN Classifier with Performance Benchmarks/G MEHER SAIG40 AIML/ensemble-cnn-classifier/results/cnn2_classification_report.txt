@@ -1,0 +1,19 @@
+CNN 2 Classification Report
+==================================================
+
+              precision    recall  f1-score   support
+
+    airplane       0.70      0.67      0.69       900
+  automobile       0.78      0.65      0.71       900
+        bird       0.69      0.26      0.38       900
+         cat       0.47      0.22      0.30       900
+        deer       0.47      0.54      0.50       900
+         dog       0.71      0.30      0.43       900
+        frog       0.41      0.90      0.56       900
+       horse       0.58      0.75      0.65       900
+        ship       0.86      0.70      0.77       900
+       truck       0.57      0.83      0.68       900
+
+    accuracy                           0.58      9000
+   macro avg       0.63      0.58      0.57      9000
+weighted avg       0.63      0.58      0.57      9000

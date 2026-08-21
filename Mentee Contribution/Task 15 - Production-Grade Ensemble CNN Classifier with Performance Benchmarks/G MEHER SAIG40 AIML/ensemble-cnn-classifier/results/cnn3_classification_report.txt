@@ -1,0 +1,19 @@
+CNN 3 - Deep Classification Report
+============================================================
+
+              precision    recall  f1-score   support
+
+    airplane       0.83      0.87      0.85       900
+  automobile       0.87      0.94      0.90       900
+        bird       0.77      0.75      0.76       900
+         cat       0.75      0.60      0.67       900
+        deer       0.85      0.76      0.80       900
+         dog       0.83      0.70      0.76       900
+        frog       0.73      0.91      0.81       900
+       horse       0.81      0.86      0.83       900
+        ship       0.90      0.91      0.91       900
+       truck       0.85      0.89      0.87       900
+
+    accuracy                           0.82      9000
+   macro avg       0.82      0.82      0.82      9000
+weighted avg       0.82      0.82      0.82      9000

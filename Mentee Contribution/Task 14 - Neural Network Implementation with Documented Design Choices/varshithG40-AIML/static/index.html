@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casting Quality Inspection AI | Binary Image Classification</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-meta">
+      <div class="nav-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+        <div class="brand-title">
+          <h1>Casting Inspection AI</h1>
+          <p>Binary Convolutional Neural Network (CNN) Classifier</p>
+        </div>
+      </div>
+      <div class="status-badge">
+        <div class="pulse-dot"></div>
+        <span>CNN Model Active (224x224)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    
+    <!-- Tab Navigation -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('inspector')">
+        <i class="fa-solid fa-camera"></i> Quality Inspector
+      </button>
+      <button class="tab-btn" onclick="switchTab('architecture')">
+        <i class="fa-solid fa-layer-group"></i> CNN Architecture
+      </button>
+      <button class="tab-btn" onclick="switchTab('metrics')">
+        <i class="fa-solid fa-chart-line"></i> Performance & Metrics
+      </button>
+      <button class="tab-btn" onclick="switchTab('bonus')">
+        <i class="fa-solid fa-flask"></i> Bonus Experiment
+      </button>
+    </div>
+
+    <!-- TAB 1: LIVE INSPECTOR -->
+    <div id="tab-inspector" class="tab-content active">
+      <div class="grid-inspector">
+        
+        <!-- Left: Upload Card -->
+        <div class="glass-card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Upload Casting Component
+            </div>
+            <span style="font-size: 12px; color: var(--text-muted);">PNG, JPG, WEBP</span>
+          </div>
+
+          <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
+            <div class="dropzone-icon">
+              <i class="fa-solid fa-file-image"></i>
+            </div>
+            <h3>Drag & Drop Image Here</h3>
+            <p>or click to select metal casting flange image</p>
+            <button class="btn-upload" type="button">Browse Files</button>
+            <input type="file" id="file-input" accept="image/*" onchange="handleFileSelect(event)">
+          </div>
+
+          <!-- Unseen Sample Selector Gallery -->
+          <div class="samples-section">
+            <h4 style="font-size: 14px; font-weight: 600; color: var(--text-muted); margin-top: 20px;">
+              <i class="fa-solid fa-bolt" style="color: var(--primary-cyan);"></i> Quick Test on Unseen Samples:
+            </h4>
+            <div class="samples-grid" id="samples-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Results Card -->
+        <div class="glass-card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-square-poll-vertical"></i> AI Inspection Result
+            </div>
+            <span id="infer-time" style="font-size: 12px; color: var(--text-muted);">Ready</span>
+          </div>
+
+          <div class="preview-container">
+            <div class="image-preview-wrapper" id="preview-wrapper">
+              <img id="image-preview" src="data/unseen/unseen_sample_1_def_front.png" alt="Casting Image Preview">
+            </div>
+
+            <div class="result-card" id="result-card">
+              <div class="result-header">
+                <span style="font-size: 13px; color: var(--text-muted);">Classification Target:</span>
+                <div class="result-badge defective" id="result-badge">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <span id="result-text">DEFECTIVE</span>
+                </div>
+              </div>
+
+              <div class="prob-meter-wrapper">
+                <div class="prob-labels">
+                  <span>Defect Probability</span>
+                  <span id="prob-value">94.2%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill defective" id="progress-fill" style="width: 94.2%;"></div>
+                </div>
+              </div>
+
+              <div class="action-recommendation defective" id="action-box">
+                <i class="fa-solid fa-shield-virus"></i>
+                <div id="action-text">
+                  <strong>Action Recommended:</strong> Send for manual inspection & quarantine immediately.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: CNN ARCHITECTURE & DECISION TABLE -->
+    <div id="tab-architecture" class="tab-content" style="display: none;">
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-table-list"></i> Completed Design Decision Table (Section 25)
+          </div>
+        </div>
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+          All 16 architecture and training hyperparameter design decisions with explicit engineering justifications.
+        </p>
+
+        <div class="table-wrapper">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Design Decision</th>
+                <th>Selected Value</th>
+                <th>Engineering Reason & Rationale</th>
+              </tr>
+            </thead>
+            <tbody id="decision-table-body">
+              <!-- Dynamically populated from API -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: PERFORMANCE & METRICS -->
+    <div id="tab-metrics" class="tab-content" style="display: none;">
+      <div class="plots-grid">
+        <div class="glass-card plot-card">
+          <div class="card-title"><i class="fa-solid fa-chart-line"></i> Training vs Validation Accuracy</div>
+          <img src="/plots/accuracy_plot.png" alt="Accuracy Plot">
+        </div>
+        <div class="glass-card plot-card">
+          <div class="card-title"><i class="fa-solid fa-chart-area"></i> Training vs Validation Loss</div>
+          <img src="/plots/loss_plot.png" alt="Loss Plot">
+        </div>
+        <div class="glass-card plot-card">
+          <div class="card-title"><i class="fa-solid fa-border-all"></i> Confusion Matrix Heatmap</div>
+          <img src="/plots/confusion_matrix.png" alt="Confusion Matrix">
+        </div>
+        <div class="glass-card plot-card">
+          <div class="card-title"><i class="fa-solid fa-images"></i> Unseen Images Inspection Grid</div>
+          <img src="/plots/unseen_predictions.png" alt="Unseen Predictions">
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BONUS EXPERIMENT -->
+    <div id="tab-bonus" class="tab-content" style="display: none;">
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-vial"></i> Bonus Experiment: Dropout Regularization Sensitivity
+          </div>
+        </div>
+
+        <div class="grid-inspector" style="margin-bottom: 24px;">
+          <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 14px; border: 1px solid var(--border-color);">
+            <h4 style="color: var(--primary-cyan); margin-bottom: 10px;">Baseline Design</h4>
+            <p><strong>Dropout Rate:</strong> <code>0.40</code></p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">
+              Deactivates 40% of hidden neurons, offering strong protection against co-adaptation.
+            </p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 14px; border: 1px solid var(--border-color);">
+            <h4 style="color: var(--primary-blue); margin-bottom: 10px;">Changed Design</h4>
+            <p><strong>Dropout Rate:</strong> <code>0.20</code></p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">
+              Deactivates 20% of hidden neurons, testing if lower dropout speeds up initial convergence.
+            </p>
+          </div>
+        </div>
+
+        <div style="text-align: center;">
+          <img src="/plots/bonus_comparison.png" alt="Bonus Comparison Plot" style="max-width: 100%; border-radius: 14px; border: 1px solid var(--border-color);">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Casting Product Quality Inspection System | Binary Image Classification Mini Project</p>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "model_name": "Logistic Regression (Optimized)",
+  "model_type": "LogisticRegression",
+  "hyperparameters": {
+    "C": 0.1,
+    "class_weight": "balanced",
+    "dual": false,
+    "fit_intercept": true,
+    "intercept_scaling": 1,
+    "l1_ratio": null,
+    "max_iter": 1000,
+    "multi_class": "deprecated",
+    "n_jobs": null,
+    "penalty": "l2",
+    "random_state": 42,
+    "solver": "saga",
+    "tol": 0.0001,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "metrics": {
+    "Accuracy": 0.745,
+    "Precision": 0.5866336633663366,
+    "Recall": 0.7292307692307692,
+    "F1": 0.6502057613168725,
+    "ROC-AUC": 0.8295931623931624
+  },
+  "features": {
+    "numeric": [
+      "Age",
+      "PagesViewed",
+      "TimeOnSite",
+      "ProductsViewed",
+      "CartItems",
+      "PreviousPurchases",
+      "AverageOrderValue",
+      "DiscountUsed",
+      "EmailClicked",
+      "AdClicked",
+      "ReviewScoreViewed",
+      "DaysSinceLastVisit",
+      "SessionCount"
+    ],
+    "categorical": [
+      "Gender",
+      "Location",
+      "DeviceType",
+      "TrafficSource"
+    ],
+    "total_after_encoding": 27
+  },
+  "training_info": {
+    "train_size": 4000,
+    "test_size": 1000,
+    "purchase_rate_train": 0.3255,
+    "purchase_rate_test": 0.325
+  }
+}
