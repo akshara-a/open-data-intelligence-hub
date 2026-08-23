@@ -1,0 +1,10 @@
+{
+  "true_negatives": 194,
+  "false_positives": 68,
+  "false_negatives": 47,
+  "true_positives": 406,
+  "labels": [
+    "Non-defective",
+    "Defective"
+  ]
+}

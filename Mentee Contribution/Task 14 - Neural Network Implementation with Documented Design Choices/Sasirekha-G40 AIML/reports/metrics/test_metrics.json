@@ -1,0 +1,7 @@
+{
+  "loss": 0.4342414140701294,
+  "compile_metrics": 0.8391608595848083,
+  "false_negative_rate": 0.10375275938189846,
+  "false_positive_rate": 0.2595419847328244,
+  "threshold": 0.5
+}

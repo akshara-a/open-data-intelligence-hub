@@ -1,0 +1,36 @@
+ROBUSTNESS TEST RESULTS
+================================================================================
+
+Weighted Ensemble Weights:
+CNN 1 = 0.20
+CNN 2 = 0.10
+CNN 3 = 0.70
+
+Clean
+----------------------------------------
+CNN 1: 65.73%
+CNN 2: 58.39%
+CNN 3: 81.88%
+Weighted Ensemble: 82.17%
+
+Gaussian Noise
+----------------------------------------
+CNN 1: 51.74%
+CNN 2: 22.66%
+CNN 3: 29.28%
+Weighted Ensemble: 31.30%
+
+Brightness Reduction
+----------------------------------------
+CNN 1: 61.14%
+CNN 2: 49.08%
+CNN 3: 79.99%
+Weighted Ensemble: 80.08%
+
+Blur
+----------------------------------------
+CNN 1: 46.80%
+CNN 2: 35.33%
+CNN 3: 40.71%
+Weighted Ensemble: 42.66%
+

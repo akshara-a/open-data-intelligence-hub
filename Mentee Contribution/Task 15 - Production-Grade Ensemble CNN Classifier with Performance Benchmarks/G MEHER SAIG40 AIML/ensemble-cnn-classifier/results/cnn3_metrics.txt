@@ -1,0 +1,10 @@
+CNN 3 - Deep Evaluation Results
+============================================================
+
+Accuracy  : 0.8188
+Precision : 0.8191
+Recall    : 0.8188
+F1-score  : 0.8160
+Total Parameters : 305,706
+Trainable Parameters : 305,258
+Non-trainable Parameters : 448
