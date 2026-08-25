@@ -1,0 +1,8 @@
+cnn_baseline,cnn_regularized,cnn_deep,ensemble_soft,condition
+0.695,0.75,0.825,0.85,original
+0.555,0.57,0.625,0.695,rotated
+0.44,0.36,0.38,0.445,blurred
+0.595,0.48,0.51,0.59,noisy
+0.425,0.445,0.765,0.675,dark
+0.61,0.63,0.755,0.755,bright
+0.385,0.355,0.58,0.51,cropped

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroCast AI — Automated Industrial Quality Inspection</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation / Hero Header -->
+        <header class="hero-header glass">
+            <div class="brand-group">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div>
+                    <h1 class="brand-title">AeroCast <span class="brand-accent">AI</span></h1>
+                    <p class="brand-subtitle">Automated Casting Defect Detection & Quality Control</p>
+                </div>
+            </div>
+
+            <div class="system-pills">
+                <div class="pill">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>3-Block Conv2D CNN</span>
+                </div>
+                <div class="pill">
+                    <i class="fa-solid fa-expand"></i>
+                    <span>224 × 224 × 3</span>
+                </div>
+                <div class="status-badge">
+                    <span class="pulse-dot"></span>
+                    <span>LINE #04 ONLINE</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Workspace -->
+        <main class="dashboard-grid">
+            <!-- Left Panel: Control Deck -->
+            <section class="panel control-panel glass">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-sliders"></i> Control Station</h2>
+                </div>
+
+                <!-- File Dropzone -->
+                <div class="control-card">
+                    <label class="card-label">Product Image Input</label>
+                    <div class="dropzone" id="dropzone">
+                        <input type="file" id="fileInput" accept="image/png, image/jpeg, image/jpg">
+                        <div class="dropzone-content">
+                            <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+                            <p class="dropzone-text"><strong>Click to upload</strong> or drag & drop</p>
+                            <p class="dropzone-subtext">JPG, JPEG, or PNG (Max 10MB)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Factory Samples Carousel -->
+                <div class="control-card">
+                    <label class="card-label">Factory Samples Quick Test</label>
+                    <div class="samples-grid" id="samplesGrid">
+                        <!-- Dynamically populated via JS -->
+                    </div>
+                </div>
+
+                <!-- Threshold Sensitivity Slider -->
+                <div class="control-card">
+                    <div class="slider-header">
+                        <label class="card-label">Decision Threshold</label>
+                        <span class="threshold-value" id="thresholdDisplay">50.00%</span>
+                    </div>
+                    <input type="range" id="thresholdSlider" min="0.10" max="0.90" step="0.05" value="0.50" class="range-slider">
+                    <div class="slider-ticks">
+                        <span>10% (Strict)</span>
+                        <span>50% (Default)</span>
+                        <span>90% (Lenient)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Inspection Results -->
+            <section class="panel result-panel glass">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-magnifying-glass-chart"></i> Live Inspection Analytics</h2>
+                    <span class="active-file-tag" id="activeFileName">No Image Loaded</span>
+                </div>
+
+                <!-- Hero Verdict Banner -->
+                <div class="verdict-banner idle" id="verdictBanner">
+                    <div class="verdict-icon" id="verdictIcon"><i class="fa-solid fa-circle-question"></i></div>
+                    <div class="verdict-text-group">
+                        <h3 class="verdict-title" id="verdictTitle">AWAITING PRODUCT INSPECTION</h3>
+                        <p class="verdict-subtitle" id="verdictSubtitle">Upload a casting product image or select a factory sample to run CNN inference.</p>
+                    </div>
+                </div>
+
+                <!-- Analytics Main Content -->
+                <div class="analytics-layout">
+                    <!-- Visual Feed Viewer with Tabs -->
+                    <div class="visual-card">
+                        <div class="visual-tabs">
+                            <button class="visual-tab active" id="tabOriginal"><i class="fa-solid fa-camera"></i> Camera Feed</button>
+                            <button class="visual-tab" id="tabHeatmap"><i class="fa-solid fa-fire"></i> Defect Overlay</button>
+                        </div>
+                        <div class="image-frame">
+                            <img id="inspectionImage" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23121720'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%2348566a' font-family='sans-serif' font-size='16'>Select Image to Begin Visual Inspection</text></svg>" alt="Inspection Frame">
+                        </div>
+                    </div>
+
+                    <!-- Defect Probability Gauge & Telemetry -->
+                    <div class="metrics-column">
+                        <!-- SVG Circular Gauge -->
+                        <div class="gauge-card">
+                            <div class="svg-gauge-container">
+                                <svg class="gauge-svg" viewBox="0 0 120 120">
+                                    <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+                                    <circle class="gauge-meter" id="gaugeMeter" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314"></circle>
+                                </svg>
+                                <div class="gauge-center">
+                                    <span class="gauge-number" id="gaugeNumber">0.0%</span>
+                                    <span class="gauge-label">DEFECT PROBABILITY</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Telemetry Grid -->
+                        <div class="telemetry-grid">
+                            <div class="telemetry-item">
+                                <span class="t-label">Cutoff Threshold</span>
+                                <span class="t-val" id="tThreshold">50.00%</span>
+                            </div>
+                            <div class="telemetry-item">
+                                <span class="t-label">Image Resolution</span>
+                                <span class="t-val" id="tResolution">224 × 224</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Directive Box -->
+                        <div class="action-card idle" id="actionCard">
+                            <div class="action-header"><i class="fa-solid fa-clipboard-check"></i> Factory Action Directive</div>
+                            <p class="action-body" id="actionText">Select an image to view automated line routing recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Panel: System Reports & Model Performance -->
+        <section class="panel reports-panel glass">
+            <div class="panel-header">
+                <h2><i class="fa-solid fa-chart-line"></i> Model Training & Validation Performance</h2>
+            </div>
+            <div class="reports-grid">
+                <div class="report-card">
+                    <h3>Accuracy Curves</h3>
+                    <img src="/reports/accuracy_graph.png" alt="Training & Validation Accuracy" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'500\' height=\'250\'><rect width=\'500\' height=\'250\' fill=\'%23121720\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2348566a\'>Accuracy Plot Ready</text></svg>'">
+                </div>
+                <div class="report-card">
+                    <h3>Loss Curves</h3>
+                    <img src="/reports/loss_graph.png" alt="Training & Validation Loss" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'500\' height=\'250\'><rect width=\'500\' height=\'250\' fill=\'%23121720\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2348566a\'>Loss Plot Ready</text></svg>'">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

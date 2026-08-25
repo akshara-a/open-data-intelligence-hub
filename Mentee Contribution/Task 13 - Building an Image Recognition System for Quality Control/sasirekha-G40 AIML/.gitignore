@@ -1,0 +1,33 @@
+# Virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+
+# Trained models (large binary files -- do not commit)
+models/*.keras
+
+# Dataset (large -- do not commit; download separately per README)
+data/train/*/*.jpg
+data/train/*/*.jpeg
+data/train/*/*.png
+data/test/*/*.jpg
+data/test/*/*.jpeg
+data/test/*/*.png
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
