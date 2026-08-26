@@ -24,7 +24,7 @@ mini-project-5/
 
 ## How to run (VS Code)
 
-1. Open this folder in VS Code (`File > Open Folder...`).
+1. Open this folder in VS Code (`File > Open Folder...`)
 2. Create and activate a virtual environment (see chat explanation for exact commands).
 3. Install dependencies: `pip install -r requirements.txt`.
 4. Open `notebooks/purchase_prediction_analysis.ipynb`, select the venv's kernel, and
