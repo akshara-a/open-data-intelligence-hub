@@ -1,0 +1,51 @@
+
+TASK 14 - CNN RESULTS SUMMARY
+
+Dataset:
+Casting Product Image Data for Quality Inspection
+
+Class 0:
+Non-defective (ok_front)
+
+Class 1:
+Defective (def_front)
+
+Input size:
+224 × 224 × 3
+
+Batch size:
+32
+
+Maximum epochs:
+25
+
+Actual epochs:
+10
+
+Best validation-loss epoch:
+5
+
+Best validation loss:
+0.6923
+
+Best validation accuracy:
+1.0000
+
+Test accuracy:
+0.5000
+
+Test precision:
+0.5000
+
+Test recall:
+1.0000
+
+Confusion Matrix:
+
+TN = 0
+FP = 10
+FN = 0
+TP = 10
+
+Model:
+c:\Users\S_Gayathri\open-data-intelligence-hub\Mentee Contribution\Task 14 - Neural Network Implementation with Documented Design Choices\S.GayathriG40-AIML\model\casting_cnn.keras
