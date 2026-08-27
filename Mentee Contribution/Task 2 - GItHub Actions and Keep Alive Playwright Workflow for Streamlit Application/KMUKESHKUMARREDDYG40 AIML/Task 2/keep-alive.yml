@@ -1,0 +1,15 @@
+name: Keep Streamlit App Warm
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  wake-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Wake up Streamlit App
+        run: |
+          curl -I ${{ secrets.STREAMLIT_APP_URL }}
