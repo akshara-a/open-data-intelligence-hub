@@ -1,2 +1,3 @@
-model,loss,accuracy,precision,recall
-Regularized CNN,0.8041972517967224,0.6100000143051147,0.5665859580039978,0.9359999895095825
+version https://git-lfs.github.com/spec/v1
+oid sha256:5caa1b4bbcfe50966bfb9d7cd5fd631fdb6ab4388fd49c4bc721024d768451ec
+size 129
