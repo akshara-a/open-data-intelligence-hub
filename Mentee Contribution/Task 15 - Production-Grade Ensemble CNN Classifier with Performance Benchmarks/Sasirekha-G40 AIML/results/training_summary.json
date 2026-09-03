@@ -1,0 +1,30 @@
+{
+  "classes": [
+    "crazing",
+    "inclusion",
+    "patches",
+    "pitted_surface",
+    "rolled-in_scale",
+    "scratches"
+  ],
+  "models": {
+    "cnn_baseline": {
+      "best_validation_accuracy": 0.9074074029922485,
+      "best_validation_loss": 0.2704196274280548,
+      "epochs_completed": 24,
+      "parameters": 2453446
+    },
+    "cnn_regularized": {
+      "best_validation_accuracy": 0.9120370149612427,
+      "best_validation_loss": 0.2664760649204254,
+      "epochs_completed": 25,
+      "parameters": 305638
+    },
+    "cnn_deep": {
+      "best_validation_accuracy": 0.30092594027519226,
+      "best_validation_loss": 1.688293695449829,
+      "epochs_completed": 10,
+      "parameters": 617958
+    }
+  }
+}
