@@ -1,4 +1,19 @@
 import pandas as pd
+from pathlib import Path
+
+# Get the project folder path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Define file paths
+DATA_DIR = BASE_DIR / "data"
+OUTPUTS_DIR = BASE_DIR / "outputs"
+
+EMPLOYEES_FILE = DATA_DIR / "employees.parquet"
+HIGH_SALARY_FILE = OUTPUTS_DIR / "high_salary_employees.parquet"
+
+# Create folders if they don't exist
+DATA_DIR.mkdir(exist_ok=True)
+OUTPUTS_DIR.mkdir(exist_ok=True)
 
 # Task 1: Create the DataFrame
 data = {
@@ -14,12 +29,12 @@ print("All Employee Records:")
 print(employees_df)
 
 # Task 2: Save the DataFrame as a Parquet file
-employees_df.to_parquet("employees.parquet", index=False)
+employees_df.to_parquet(EMPLOYEES_FILE, index=False)
 
 print("\nemployees.parquet file created successfully.")
 
 # Task 3: Read the Parquet file
-loaded_df = pd.read_parquet("employees.parquet")
+loaded_df = pd.read_parquet(EMPLOYEES_FILE)
 
 print("\nEmployees Read from Parquet File:")
 print(loaded_df)
@@ -43,16 +58,13 @@ print("\nNumber of Employees in Each Department:")
 print(department_counts)
 
 # Task 5: Save filtered data as Parquet
-high_salary_df.to_parquet(
-    "high_salary_employees.parquet",
-    index=False
-)
+high_salary_df.to_parquet(HIGH_SALARY_FILE, index=False)
 
 print("\nhigh_salary_employees.parquet file created successfully.")
 
 # Bonus Task: Read only name and salary columns
 bonus_df = pd.read_parquet(
-    "employees.parquet",
+    EMPLOYEES_FILE,
     columns=["name", "salary"]
 )
 
