@@ -180,13 +180,13 @@ print(new_arrow_table)
 
 pq.write_table(
     employee_table,
-    "employees.parquet"
+    "data/employees.parquet"
 )
 
 print("\n" + "=" * 60)
 print("TASK 11: PARQUET FILE")
 print("=" * 60)
-print("employees.parquet created successfully.")
+print("data/employees.parquet created successfully.")
 
 
 # ============================================================
@@ -194,7 +194,7 @@ print("employees.parquet created successfully.")
 # ============================================================
 
 loaded_table = pq.read_table(
-    "employees.parquet"
+    "data/employees.parquet"
 )
 
 print("\n" + "=" * 60)
@@ -208,7 +208,7 @@ print(loaded_table)
 # ============================================================
 
 with ipc.new_file(
-    "employees.arrow",
+    "data/employees.arrow",
     employee_table.schema
 ) as writer:
     writer.write_table(employee_table)
@@ -216,14 +216,14 @@ with ipc.new_file(
 print("\n" + "=" * 60)
 print("TASK 13: ARROW IPC FILE")
 print("=" * 60)
-print("employees.arrow created successfully.")
+print("data/employees.arrow created successfully.")
 
 
 # ============================================================
 # Task 14: Read Arrow IPC File
 # ============================================================
 
-with ipc.open_file("employees.arrow") as reader:
+with ipc.open_file("data/employees.arrow") as reader:
     ipc_table = reader.read_all()
 
 print("\n" + "=" * 60)
@@ -304,13 +304,13 @@ print(employee_with_annual_salary)
 
 pq.write_table(
     it_employees,
-    "it_employees.parquet"
+    "outputs/it_employees.parquet"
 )
 
 print("\n" + "=" * 60)
 print("BONUS 4: IT EMPLOYEES PARQUET")
 print("=" * 60)
-print("it_employees.parquet created successfully.")
+print("outputs/it_employees.parquet created successfully.")
 
 
 # ============================================================
@@ -318,7 +318,7 @@ print("it_employees.parquet created successfully.")
 # ============================================================
 
 selected_columns = pq.read_table(
-    "employees.parquet",
+    "data/employees.parquet",
     columns=["name", "salary"]
 )
 
