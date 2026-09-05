@@ -1,0 +1,1 @@
+Placeholder for cnn_independent.png — generated automatically when notebook/task15_ensemble_cnn.ipynb is run (see notebook Sections 6-9).
