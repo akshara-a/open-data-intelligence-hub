@@ -1,0 +1,1 @@
+Recommended deployment: CNN 3 - Deep. The ensemble's measured accuracy improvement is -2.39 percentage points, while its latency increases by 2.29 ms/image. A single strong CNN may provide a better production cost/performance balance.
