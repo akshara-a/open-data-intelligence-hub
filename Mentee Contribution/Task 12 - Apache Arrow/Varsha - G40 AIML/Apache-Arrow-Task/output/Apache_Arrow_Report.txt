@@ -1,0 +1,114 @@
+
+
+============================================================
+Apache Arrow Project - Results Report
+============================================================
+
+
+1. Dataset Information
+------------------------------------------------------------
+
+Dataset Name : Mall Customers Dataset
+
+Total Rows   : 200
+
+Total Columns: 5
+
+
+Columns:
+
+- CustomerID
+- Gender
+- Age
+- AnnualIncome
+- SpendingScore
+
+
+
+2. Data Cleaning Results
+------------------------------------------------------------
+
+Missing values:
+No missing values found.
+
+Duplicate records:
+No duplicate records found.
+
+Column names:
+Successfully standardized.
+
+
+
+3. Apache Arrow Conversion
+------------------------------------------------------------
+
+Pandas DataFrame successfully converted into Apache Arrow Table.
+
+Arrow file created successfully:
+
+Mall_Customers.arrow
+
+
+
+4. Data Integrity Check
+------------------------------------------------------------
+
+Original DataFrame and Arrow DataFrame comparison:
+
+Result:
+Both datasets are identical.
+
+No data loss occurred during conversion.
+
+
+
+5. File Format Comparison
+------------------------------------------------------------
+
+CSV Format:
+- Text based format
+- Human readable
+- Suitable for small datasets
+
+
+Apache Arrow Format:
+- Columnar storage format
+- Optimized for analytics
+- Faster data processing
+
+
+
+6. Performance Observation
+------------------------------------------------------------
+
+Read Performance:
+
+Apache Arrow provides faster reading compared
+to CSV for analytical workloads.
+
+
+Write Performance:
+
+Performance depends on dataset size.
+Arrow performs efficiently for large datasets.
+
+
+
+7. Final Conclusion
+------------------------------------------------------------
+
+Apache Arrow provides an efficient way to store
+and process large analytical datasets.
+
+Advantages:
+
+✓ Faster data access
+✓ Columnar memory format
+✓ Better interoperability
+✓ Suitable for big data analytics
+
+
+============================================================
+Project Completed Successfully
+============================================================
+
