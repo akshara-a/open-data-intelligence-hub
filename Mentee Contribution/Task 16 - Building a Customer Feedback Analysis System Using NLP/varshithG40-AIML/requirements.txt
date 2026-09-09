@@ -1,0 +1,17 @@
+# Core NLP & Machine Learning
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+joblib>=1.3.0
+
+# Optional Transformers & Deep Learning
+torch>=2.0.0
+transformers>=4.30.0
+
+# Interactive Dashboard & Visualizations
+streamlit>=1.30.0
+plotly>=5.15.0
+
+# Testing & Development
+pytest>=7.4.0
+jupyter>=1.0.0
