@@ -1,0 +1,5 @@
+1. Dataset contains 30 rows.
+2. Dataset contains 16 columns.
+3. Missing values found in 0 columns.
+4. Highest value observed is 415000.
+5. Most common category is Habitat Loss.

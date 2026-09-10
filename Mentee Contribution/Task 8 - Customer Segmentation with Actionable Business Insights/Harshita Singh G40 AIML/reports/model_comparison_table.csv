@@ -1,5 +1,3 @@
-Model,Objective,Baseline Performance,Tuned Performance,Selected Model
-K-Means,Customer segmentation,-,Silhouette = 0.418,Yes
-Linear Regression,Predict CustomerRating,"RMSE=0.660, R2=0.224",-,No
-Ridge Regression,Predict CustomerRating,"RMSE=0.660, R2=0.224","RMSE=0.659, R2=0.225",Yes
-Logistic Regression,Predict PurchaseLikelihood,"F1=0.821, ROC-AUC=0.824","F1=0.821, ROC-AUC=0.824",Yes
+version https://git-lfs.github.com/spec/v1
+oid sha256:41be52240ae1324e557dffd7f19694327b122139b54ba1821e1445c654a41297
+size 387
