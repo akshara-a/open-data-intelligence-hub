@@ -1,0 +1,21 @@
+TASK 15 - ENSEMBLE MODEL EVALUATION
+==================================================
+
+Accuracy : 0.6396
+Precision: 1.0000
+Recall   : 0.1013
+F1 Score : 0.1839
+
+Confusion Matrix:
+[[118   0]
+ [ 71   8]]
+
+Classification Report:
+               precision    recall  f1-score   support
+
+    defective       0.62      1.00      0.77       118
+non-defective       1.00      0.10      0.18        79
+
+     accuracy                           0.64       197
+    macro avg       0.81      0.55      0.48       197
+ weighted avg       0.77      0.64      0.53       197

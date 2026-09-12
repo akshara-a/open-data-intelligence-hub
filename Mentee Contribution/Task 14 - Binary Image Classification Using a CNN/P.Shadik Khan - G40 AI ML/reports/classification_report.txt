@@ -1,0 +1,11 @@
+Casting Defect Detection - Classification Report
+=======================================================
+
+               precision    recall  f1-score   support
+
+    Defective       0.95      0.76      0.84       566
+Non-defective       0.48      0.85      0.61       149
+
+     accuracy                           0.78       715
+    macro avg       0.72      0.80      0.73       715
+ weighted avg       0.85      0.78      0.80       715
