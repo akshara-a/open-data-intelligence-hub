@@ -1,0 +1,41 @@
+# Data manipulation
+
+pandas
+numpy
+
+# Machine Learning
+
+scikit-learn
+
+# Model saving
+
+joblib
+
+# NLP preprocessing
+
+nltk
+
+# Sentence embeddings
+
+sentence-transformers
+
+# Hugging Face Transformers
+
+transformers
+datasets
+evaluate
+accelerate
+
+# Deep Learning backend
+
+torch
+
+# Jupyter
+
+jupyter
+ipykernel
+
+# Optional visualization
+
+matplotlib
+seaborn
