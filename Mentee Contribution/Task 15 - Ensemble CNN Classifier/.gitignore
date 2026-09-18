@@ -1,0 +1,7 @@
+@"
+.venv/
+.venv311/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+"@ | Set-Content ".\Mentee Contribution\Task 15 - Ensemble CNN Classifier\.gitignore"
