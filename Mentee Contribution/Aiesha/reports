@@ -1,0 +1,44 @@
+# Task 1 - Data Analysis Using Polars
+
+## Objective
+
+The objective of this project is to analyze SDG (Sustainable Development Goals) indicator data using the Polars library in Python. The project demonstrates efficient data loading, cleaning, exploration, and analysis.
+
+## Dataset Description
+
+The dataset contains SDG-related indicators collected from various countries. It includes information about different goals, indicators, and associated values.
+
+## Tools and Technologies
+
+* Python
+* Polars
+* Jupyter Notebook
+* GitHub
+
+## Analysis Performed
+
+1. Loaded the dataset using Polars.
+2. Inspected dataset structure and dimensions.
+3. Checked for missing values.
+4. Generated summary statistics.
+5. Explored important columns and indicators.
+6. Identified trends and patterns in the data.
+
+## Findings
+
+* The dataset contains multiple SDG indicators.
+* Some columns contain missing or incomplete values.
+* Summary statistics provided insights into the distribution of indicator values.
+* Data exploration helped identify key trends across countries and indicators.
+
+## Conclusion
+
+Polars proved to be a fast and efficient library for data analysis. The project successfully demonstrated data loading, exploration, and analysis using Polars while gaining insights from SDG indicator data.
+
+## Repository Contents
+
+* Jupyter Notebook (.ipynb)
+* Source Code (.py)
+* Dataset Files (.csv)
+* Project Report
+* README.md
