@@ -1,0 +1,23 @@
+results_text = """
+CASTING DEFECT DETECTION - MODEL RESULTS
+
+Test Accuracy: 98.04%
+Test Loss: 0.0433
+
+OK / Acceptable:
+Precision: 0.95
+Recall: 1.00
+F1-Score: 0.97
+
+Defective:
+Precision: 1.00
+Recall: 0.97
+F1-Score: 0.98
+
+Overall Accuracy: 0.98
+"""
+
+with open("../reports/model_results.txt", "w") as f:
+    f.write(results_text)
+
+print("Model results saved successfully!")

@@ -1,0 +1,118 @@
+CNN DEFECT CLASSIFICATION
+FINAL RESULTS
+==========================================
+
+TEST DATASET
+------------------------------------------
+Total test images: 715
+
+Non-defective images: 262
+Defective images: 453
+
+
+MODEL PERFORMANCE
+------------------------------------------
+
+Test Loss: 0.4946
+
+Test Accuracy: 78.46%
+
+Precision: 94.36%
+
+Recall: 70.20%
+
+
+CLASSIFICATION REPORT
+------------------------------------------
+
+Class              Precision   Recall   F1-Score
+
+Non-defective        0.64       0.93      0.76
+
+Defective            0.94       0.70      0.81
+
+
+Overall Accuracy: 0.78
+
+
+CONFUSION MATRIX
+------------------------------------------
+
+                    Predicted
+                 Non-defective  Defective
+
+Actual
+Non-defective          243          19
+
+Defective              135         318
+
+
+INTERPRETATION
+------------------------------------------
+
+The CNN correctly classified 243 non-defective images
+and 318 defective images.
+
+19 non-defective images were incorrectly classified as
+defective.
+
+135 defective images were incorrectly classified as
+non-defective.
+
+The model achieved high precision of 94.36%, meaning that
+most images predicted as defective were actually defective.
+
+The recall for the defective class was 70.20%. Recall is
+important because the system should detect as many defective
+products as possible. A defective product incorrectly
+classified as non-defective may pass the quality inspection.
+
+
+FIVE IMAGE PREDICTION RESULTS
+------------------------------------------
+
+1. cast_ok_0_10.jpeg
+   Actual: ok_front
+   Predicted: ok_front
+   Defective Probability: 16.04%
+
+2. cast_ok_0_1001.jpeg
+   Actual: ok_front
+   Predicted: ok_front
+   Defective Probability: 44.58%
+
+3. cast_ok_0_1002.jpeg
+   Actual: ok_front
+   Predicted: ok_front
+   Defective Probability: 24.70%
+
+4. cast_def_0_1059.jpeg
+   Actual: def_front
+   Predicted: ok_front
+   Defective Probability: 23.63%
+
+5. cast_def_0_1063.jpeg
+   Actual: def_front
+   Predicted: def_front
+   Defective Probability: 59.87%
+
+
+CONCLUSION
+------------------------------------------
+
+The developed Convolutional Neural Network successfully
+classifies casting product images into non-defective and
+defective categories.
+
+The model achieved a test accuracy of 78.46%, precision of
+94.36%, and recall of 70.20%.
+
+The high precision indicates that the model is reliable when
+it predicts an image as defective. However, the confusion
+matrix shows that 135 defective images were classified as
+non-defective. Therefore, improving defective-class recall
+would be an important area for future improvement.
+
+Overall, the CNN demonstrates that automated image-based
+quality inspection can be used to identify defective casting
+products.

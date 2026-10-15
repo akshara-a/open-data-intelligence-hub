@@ -1,0 +1,205 @@
+CNN DEFECT CLASSIFICATION - DESIGN DECISIONS
+================================================
+
+1. Image Size
+---------------
+Choice: 224 x 224 x 3
+
+Reason:
+All images are resized to 224 x 224 pixels with 3 RGB color channels.
+This provides a consistent input size for the CNN while preserving useful
+visual information.
+
+
+2. Classification Type
+------------------------
+Choice: Binary Classification
+
+Class 0: Non-defective (ok_front)
+Class 1: Defective (def_front)
+
+Reason:
+The project contains two categories of casting products.
+
+
+3. CNN Model
+-------------
+Choice: Convolutional Neural Network (CNN)
+
+Reason:
+CNNs are suitable for image classification because they can automatically
+learn visual features such as edges, textures and shapes.
+
+
+4. Convolution Filters
+-----------------------
+Choice: 32, 64 and 128 filters
+
+Reason:
+The number of filters increases in deeper layers so that the network can
+learn increasingly complex image features.
+
+
+5. Kernel Size
+---------------
+Choice: 3 x 3
+
+Reason:
+A 3 x 3 kernel is effective for detecting local image features while
+keeping the number of parameters manageable.
+
+
+6. Activation Function
+-----------------------
+Choice: ReLU
+
+Reason:
+ReLU introduces non-linearity and helps the network learn complex patterns
+efficiently.
+
+
+7. Pooling
+-----------
+Choice: MaxPooling2D
+
+Reason:
+Max pooling reduces the spatial dimensions of feature maps and helps
+reduce computation while retaining important features.
+
+
+8. Global Average Pooling
+--------------------------
+Choice: GlobalAveragePooling2D
+
+Reason:
+It reduces the feature maps to a compact representation and reduces the
+number of parameters compared with a large Flatten layer.
+
+
+9. Dropout
+-----------
+Choice: 0.40
+
+Reason:
+Dropout helps reduce overfitting by randomly disabling some neurons during
+training.
+
+
+10. Hidden Dense Layer
+----------------------
+Choice: 64 neurons with ReLU
+
+Reason:
+The dense layer combines the extracted features before the final
+classification.
+
+
+11. Output Layer
+-----------------
+Choice: 1 neuron with Sigmoid activation
+
+Reason:
+Sigmoid produces a probability between 0 and 1 for binary classification.
+
+
+12. Optimizer
+--------------
+Choice: Adam
+
+Reason:
+Adam automatically adapts the learning rate during training and is
+effective for CNN training.
+
+
+13. Learning Rate
+------------------
+Choice: 0.001
+
+Reason:
+0.001 provides a suitable starting learning rate for the Adam optimizer.
+
+
+14. Loss Function
+------------------
+Choice: Binary Cross-Entropy
+
+Reason:
+Binary cross-entropy is appropriate because the model classifies images
+into two classes.
+
+
+15. Batch Size
+---------------
+Choice: 32
+
+Reason:
+A batch size of 32 provides a balance between memory usage and training
+efficiency.
+
+
+16. Maximum Epochs
+-------------------
+Choice: 25
+
+Reason:
+The model can train for up to 25 epochs while EarlyStopping can stop
+training earlier if validation performance stops improving.
+
+
+17. Data Augmentation
+----------------------
+Techniques:
+- Random horizontal flip
+- Random rotation
+- Random zoom
+- Random contrast
+
+Reason:
+Data augmentation creates variations of training images and helps the
+model become more robust to image variations.
+
+
+18. Evaluation Metrics
+-----------------------
+Metrics:
+- Accuracy
+- Precision
+- Recall
+
+Reason:
+Accuracy measures overall correctness.
+Precision measures how many predicted defective images are actually
+defective.
+Recall measures how many actual defective images are detected.
+
+
+19. Confusion Matrix
+---------------------
+Purpose:
+The confusion matrix shows correct and incorrect predictions for both
+non-defective and defective classes.
+
+
+20. Early Stopping
+-------------------
+Choice:
+Monitor validation loss with patience of 5.
+
+Reason:
+It prevents unnecessary training and helps reduce overfitting.
+
+
+21. Learning Rate Reduction
+----------------------------
+Choice:
+Reduce learning rate by a factor of 0.5 when validation loss stops
+improving.
+
+Reason:
+A smaller learning rate can help the model improve when learning becomes
+slower.
+
+
+================================================
+END OF DESIGN DECISIONS
+================================================
