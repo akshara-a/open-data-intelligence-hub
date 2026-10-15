@@ -1,0 +1,23 @@
+# ==========================================
+# TASK 7: Create DuckDB Database
+# ==========================================
+
+connection = duckdb.connect("company.duckdb")
+
+connection.execute("""
+    CREATE OR REPLACE TABLE employees AS
+    SELECT *
+    FROM read_parquet('employees.parquet')
+""")
+
+database_result = connection.execute("""
+    SELECT *
+    FROM employees
+""").df()
+
+print("\n=== Employees from DuckDB Database ===")
+print(database_result)
+
+connection.close()
+
+print("\ncompany.duckdb created successfully.")
