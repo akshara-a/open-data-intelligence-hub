@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+
+dataset/casting_data/train/
+dataset/casting_data/test/
