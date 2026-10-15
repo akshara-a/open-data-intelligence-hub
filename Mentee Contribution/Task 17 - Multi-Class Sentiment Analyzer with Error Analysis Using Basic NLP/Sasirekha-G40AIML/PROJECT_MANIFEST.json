@@ -1,0 +1,15 @@
+{
+  "project": "Sentiment Intelligence",
+  "dataset_file": "data/raw/Tweets.csv",
+  "source_archive": "archive (2).zip",
+  "rows": 27481,
+  "columns": [
+    "textID",
+    "text",
+    "selected_text",
+    "sentiment"
+  ],
+  "model": "TF-IDF + Logistic Regression",
+  "accuracy": 0.6788573508005823,
+  "macro_f1": 0.6817518932279043
+}
