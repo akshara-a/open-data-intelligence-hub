@@ -1,0 +1,16 @@
+
+### Important correction
+
+I intentionally **did not put a fake test accuracy** into the README. We need to use the actual test accuracy from your notebook.
+
+Also, the validation class counts in that table are only an approximate description; we'll verify the actual class distribution before finalizing if needed.
+
+---
+
+# STEP 17 — Create `requirements.txt`
+
+Open:
+
+```text
+P.Shadik Khan - G40 AI ML
+└── requirements.txt
