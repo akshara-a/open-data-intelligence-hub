@@ -1,0 +1,311 @@
+---
+title: "Customer Feedback Analysis System Using NLP"
+author: "Nidhi"
+output: html_document
+---
+
+# Customer Feedback Analysis System Using NLP
+
+This project performs customer feedback analysis using classical NLP techniques.
+
+## Learning Path
+
+1. Text Cleaning
+2. Tokenization
+3. Stop Words
+4. Stemming
+5. Lemmatization
+6. Bag of Words
+7. TF-IDF
+8. N-grams
+9. Logistic Regression
+10. Sentiment Analysis
+11. Text Classification
+12. Multi-label Classification
+13. Precision / Recall / F1
+14. Word Embeddings
+15. Sentence Embeddings
+16. Attention
+17. Transformers
+18. BERT
+
+## 1. Libraries
+
+```{python}
+import pandas as pd
+import re
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report, f1_score
+```
+
+## 2. Dataset
+
+```{python}
+data = [
+    ("Payment keeps failing", "negative", ["payment"]),
+    ("The application is very slow", "negative", ["performance"]),
+    ("I love the new dashboard", "positive", ["ui"]),
+    ("Support solved my issue quickly", "positive", ["support"]),
+    ("Login OTP is not arriving", "negative", ["login"]),
+    ("The app is slow and payment fails", "negative", ["performance", "payment"]),
+    ("Excellent customer support", "positive", ["support"]),
+    ("The service is okay", "neutral", ["general"]),
+    ("The latest update is good but payment is failing frequently", "negative", ["payment", "performance"]),
+    ("The support team solved my issue very quickly", "positive", ["support"]),
+    ("App is extremely slow", "negative", ["performance"]),
+    ("The application is okay", "neutral", ["general"]),
+    ("Payment gateway crashed during checkout", "negative", ["payment"]),
+    ("Login page keeps timing out", "negative", ["login"]),
+    ("The new UI looks beautiful", "positive", ["ui"]),
+    ("Support team was rude and unhelpful", "negative", ["support"]),
+    ("App freezes every time I open it", "negative", ["performance"]),
+    ("Payment succeeded but receipt never arrived", "negative", ["payment"]),
+    ("OTP arrives fine now, good fix", "positive", ["login"]),
+    ("Dashboard redesign is confusing", "negative", ["ui"]),
+    ("Customer care resolved my ticket fast", "positive", ["support"]),
+    ("Nothing to complain about, works fine", "neutral", ["general"]),
+    ("Slow app and OTP delay both happened today", "negative", ["performance", "login"]),
+    ("Great job on the payment refund process", "positive", ["payment"])
+]
+
+df = pd.DataFrame(data, columns=["feedback", "sentiment", "categories"])
+df.head()
+```
+
+## 3. Text Cleaning
+
+```{python}
+def clean_text(text: str) -> str:
+    text = text.lower()
+    text = text.strip()
+    text = re.sub(r"\s+", " ", text)
+    return text
+
+df["clean_feedback"] = df["feedback"].apply(clean_text)
+
+df[["feedback", "clean_feedback"]]
+```
+
+## 4. Sentiment Classification
+
+```{python}
+X_train, X_test, y_train, y_test = train_test_split(
+    df["clean_feedback"],
+    df["sentiment"],
+    test_size=0.25,
+    random_state=42,
+    stratify=df["sentiment"]
+)
+
+sentiment_model = Pipeline([
+    ("tfidf", TfidfVectorizer(
+        ngram_range=(1, 2),
+        stop_words="english"
+    )),
+    ("clf", LogisticRegression(max_iter=1000))
+])
+
+sentiment_model.fit(X_train, y_train)
+y_pred = sentiment_model.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nClassification Report:\n")
+print(classification_report(y_test, y_pred, zero_division=0))
+```
+
+## 5. Multi-label Category Preparation
+
+```{python}
+mlb = MultiLabelBinarizer()
+y_cat = mlb.fit_transform(df["categories"])
+
+print("Category classes:", mlb.classes_)
+```
+
+## 6. Category Classification Evaluation
+
+```{python}
+Xc_train, Xc_test, yc_train, yc_test = train_test_split(
+    df["clean_feedback"],
+    y_cat,
+    test_size=0.25,
+    random_state=42
+)
+
+cat_vectorizer = TfidfVectorizer(
+    ngram_range=(1, 2),
+    stop_words="english"
+)
+
+Xc_train_vec = cat_vectorizer.fit_transform(Xc_train)
+Xc_test_vec = cat_vectorizer.transform(Xc_test)
+
+eval_category_model = OneVsRestClassifier(
+    LogisticRegression(max_iter=1000)
+)
+
+eval_category_model.fit(Xc_train_vec, yc_train)
+
+yc_pred = eval_category_model.predict(Xc_test_vec)
+
+print("Category classes:", mlb.classes_)
+print("Micro F1:", f1_score(yc_test, yc_pred, average="micro", zero_division=0))
+print("Macro F1:", f1_score(yc_test, yc_pred, average="macro", zero_division=0))
+```
+
+## 7. Train Final Category Model
+
+```{python}
+cat_vectorizer = TfidfVectorizer(
+    ngram_range=(1, 2),
+    stop_words="english"
+)
+
+Xc_full_vec = cat_vectorizer.fit_transform(df["clean_feedback"])
+
+category_model = OneVsRestClassifier(
+    LogisticRegression(max_iter=1000)
+)
+
+category_model.fit(Xc_full_vec, y_cat)
+```
+
+## 8. Keyword Extraction
+
+```{python}
+def extract_keywords(text, vectorizer, top_n=3):
+    clean = clean_text(text)
+    vec = vectorizer.transform([clean])
+    scores = vec.toarray()[0]
+    terms = vectorizer.get_feature_names_out()
+
+    top_indices = scores.argsort()[::-1][:top_n]
+
+    return [
+        terms[i]
+        for i in top_indices
+        if scores[i] > 0
+    ]
+
+extract_keywords(
+    "Payment gateway failed after entering the OTP",
+    cat_vectorizer
+)
+```
+
+## 9. Complete Feedback Analysis
+
+```{python}
+def analyze_feedback(text, threshold=0.3):
+    clean = clean_text(text)
+
+    sentiment = sentiment_model.predict([clean])[0]
+
+    cat_vec = cat_vectorizer.transform([clean])
+    probs = category_model.predict_proba(cat_vec)[0]
+
+    predicted_categories = [
+        mlb.classes_[i]
+        for i, p in enumerate(probs)
+        if p >= threshold
+    ]
+
+    if not predicted_categories:
+        predicted_categories = [
+            mlb.classes_[probs.argmax()]
+        ]
+
+    keywords = extract_keywords(
+        text,
+        cat_vectorizer
+    )
+
+    print("Feedback:", text)
+    print("Sentiment:", sentiment)
+    print("Categories:", predicted_categories)
+    print("Keywords:", keywords)
+    print()
+
+analyze_feedback(
+    "The app is very slow and payment keeps failing."
+)
+
+analyze_feedback(
+    "The support team solved my issue very quickly."
+)
+```
+
+## 10. Confusion Matrix
+
+```{python}
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+cm = confusion_matrix(
+    y_test,
+    y_pred,
+    labels=sentiment_model.classes_
+)
+
+plt.figure(figsize=(5, 4))
+
+sns.heatmap(
+    cm,
+    annot=True,
+    fmt="d",
+    cmap="Blues",
+    xticklabels=sentiment_model.classes_,
+    yticklabels=sentiment_model.classes_
+)
+
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Sentiment Model — Confusion Matrix")
+plt.show()
+```
+
+## 11. Test With New Feedback
+
+```{python}
+new_feedback = [
+    "The payment is failing again",
+    "The new dashboard looks beautiful",
+    "The application is extremely slow",
+    "Customer support solved my problem"
+]
+
+for text in new_feedback:
+    analyze_feedback(text)
+```
+
+## Design Choices & Results
+
+**Pipeline:** Text Cleaning → TF-IDF (unigram + bigram, English stopwords removed) → Logistic Regression
+
+### Sentiment Classification
+
+- Accuracy is evaluated on the held-out test split.
+- The dataset is intentionally small, with 24 rows.
+- The neutral class has fewer examples, so its performance can be weaker.
+
+### Category Classification
+
+- `OneVsRestClassifier` + Logistic Regression is used for multi-label classification.
+- `predict_proba` with a `0.3` threshold is used for category selection.
+- If no category crosses the threshold, the highest-probability category is selected.
+
+### Keyword Extraction
+
+- TF-IDF term scores from the category vectorizer are used.
+- Top 3 keywords are returned for each feedback.
+
+### Known Limitation
+
+The dataset is intentionally small for a beginner-level project. A larger real-world dataset would improve model performance, especially for the neutral sentiment class and category classification.
