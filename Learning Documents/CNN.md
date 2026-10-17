@@ -1,4 +1,4 @@
-# Convolutional Neural Networks (CNNs) — A Detailed Beginner-Friendly Guide
+# Convolutional Neural Networks (CNNs)
 
 ## 1. What Is a CNN?
 
