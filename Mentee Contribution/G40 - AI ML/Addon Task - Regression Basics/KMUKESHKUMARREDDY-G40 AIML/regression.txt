@@ -1,0 +1,79 @@
+1. What is regression in machine learning, and when is it used?
+
+Answer: Regression is a supervised learning algorithm used to predict continuous numerical values, such as predicting house prices or employee salaries.
+
+2. What is the difference between simple linear regression and multiple linear regression?
+
+Answer: Simple linear regression uses one independent variable (e.g., salary based on experience), while multiple linear regression uses multiple independent variables (e.g., salary based on experience, education, and age).
+
+3. What assumptions are made by linear regression?
+
+Answer: Linear regression assumes linearity, independence, normal distribution of errors, constant variance of errors, and no multicollinearity.
+
+4. What is the difference between a dependent variable and an independent variable?
+
+Answer: The dependent variable is the value being predicted (e.g., house price), while the independent variable is the feature used for prediction (e.g., house area).
+
+5. What do the slope and intercept represent in a linear regression model?
+
+Answer: The slope shows how much the output changes for a one-unit increase in the input, while the intercept is the predicted output when the input is zero (e.g., Salary = 20,000 + 5,000 × Experience).
+
+6. What is the purpose of the cost function in regression?
+
+Answer: The cost function measures the prediction error and helps the model find the best-fit line by minimizing that error.
+
+7. What is Mean Squared Error (MSE), and why is it commonly used?
+
+Answer: MSE is the average of squared prediction errors and is commonly used because it penalizes larger errors more than smaller ones.
+
+8. What is the difference between MAE, MSE, and RMSE?
+
+Answer: MAE measures average absolute error, MSE measures average squared error, and RMSE is the square root of MSE, making it easier to interpret (e.g., predicting house prices in rupees).
+
+9. What is the R-squared score, and how should it be interpreted?
+
+Answer: R² measures how well the model explains the variation in the target variable, where R² = 0.90 means the model explains 90% of the variance.
+
+10. What is adjusted R-squared, and why is it useful?
+
+Answer: Adjusted R² considers the number of predictors and prevents unnecessary features from falsely increasing the model's performance.
+
+11. What is overfitting in a regression model?
+
+Answer: Overfitting occurs when the model learns the training data too well, including noise, resulting in poor performance on new data (e.g., a complex polynomial fitting every training point).
+
+12. What is underfitting in a regression model?
+
+Answer: Underfitting occurs when the model is too simple to capture the data pattern (e.g., fitting a straight line to curved data).
+
+13. What is multicollinearity, and how does it affect regression?
+
+Answer: Multicollinearity occurs when independent variables are highly correlated, making regression coefficients unstable (e.g., height in centimeters and inches used together).
+
+14. How can multicollinearity be detected?
+
+Answer: Multicollinearity can be detected using a correlation matrix or Variance Inflation Factor (VIF), where a VIF greater than 10 indicates a problem.
+
+15. What is regularization, and why is it used?
+
+Answer: Regularization adds a penalty to the regression model to reduce overfitting and improve prediction on unseen data.
+
+16. What is the difference between Ridge, Lasso, and Elastic Net regression?
+
+Answer: Ridge reduces coefficient values, Lasso reduces some coefficients to zero for feature selection, and Elastic Net combines both methods.
+
+17. How does Lasso regression perform feature selection?
+
+Answer: Lasso regression performs feature selection by shrinking less important feature coefficients exactly to zero (e.g., removing an irrelevant "ZIP code" feature when predicting salaries).
+
+18. What is polynomial regression?
+
+Answer: Polynomial regression models nonlinear relationships by adding polynomial terms (e.g., predicting a car's fuel efficiency based on speed, where the relationship is curved).
+
+19. How do outliers affect a regression model?
+
+Answer: Outliers can significantly shift the regression line and reduce prediction accuracy (e.g., a ₹10 crore house among ₹50 lakh houses).
+
+20. How would you evaluate the performance of a regression model?
+
+Answer: A regression model is evaluated using metrics such as MAE, MSE, RMSE, and R², where lower error values and higher R² indicate better performance.

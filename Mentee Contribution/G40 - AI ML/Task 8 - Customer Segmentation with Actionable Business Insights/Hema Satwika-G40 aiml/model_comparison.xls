@@ -1,0 +1,5 @@
+Model,Objective,Metric,Result,Business Use
+K-Means,Customer Segmentation,Silhouette Score,0.13306033696766253,Create customer segments
+Linear Regression,Predict Customer Rating,RMSE / R2,"RMSE=0.7387, R2=-0.0008",Predict customer ratings
+Ridge Regression,Predict Customer Rating,RMSE / R2,"RMSE=0.7387, R2=-0.0008",Predict customer ratings
+Logistic Regression,Predict Purchase Likelihood,Accuracy / Precision / Recall / F1 / ROC-AUC,"F1=0.7992, ROC-AUC=0.9117",Identify likely customers

@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+.env
+dwca/
+antarctic_dwca.zip
+.streamlit/

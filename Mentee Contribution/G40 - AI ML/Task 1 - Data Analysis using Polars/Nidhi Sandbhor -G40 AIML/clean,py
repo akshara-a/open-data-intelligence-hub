@@ -1,0 +1,47 @@
+import pandas as pd
+
+df = pd.read_csv(
+    "Data/Domestic Tourism-Accommodation.csv",
+    encoding="latin1"
+)
+
+countries = []
+current_country = None
+
+years = [str(y) for y in range(1995, 2023)]
+
+for i in range(len(df)):
+
+    country = df.loc[i, "Basic data and indicators"]
+
+    if pd.notna(country):
+        if str(country).isupper():
+            current_country = country
+
+    if str(df.loc[i, "Unnamed: 6"]) == "Guests":
+
+        for year in years:
+
+            value = df.loc[i, year]
+
+            if pd.notna(value) and value != "..":
+
+                countries.append([
+                    current_country,
+                    year,
+                    value
+                ])
+
+clean_df = pd.DataFrame(
+    countries,
+    columns=["Country", "Year", "Guests"]
+)
+
+print(clean_df.head(20))
+
+clean_df.to_csv(
+    "clean_tourism.csv",
+    index=False
+)
+
+print("Clean dataset saved!")
