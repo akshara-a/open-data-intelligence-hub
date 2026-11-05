@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNN Convolution Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .grid-cell {
+            transition: all 0.2s ease-in-out;
+        }
+        .highlight-input {
+            background-color: rgba(59, 130, 246, 0.4); /* Blue */
+            border-color: #3b82f6;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+            z-index: 10;
+        }
+        .highlight-output {
+            background-color: rgba(168, 85, 247, 0.6); /* Purple */
+            border-color: #a855f7;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+            transform: scale(1.1);
+            z-index: 10;
+            font-weight: bold;
+        }
+        .highlight-kernel {
+            background-color: rgba(34, 197, 94, 0.3); /* Green */
+        }
+        /* Custom scrollbar for math breakdown */
+        ::-webkit-scrollbar {
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto w-full space-y-6">
+        
+        <!-- Header -->
+        <header class="text-center space-y-2">
+            <h1 class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                Interactive Convolution Visualizer
+            </h1>
+            <p class="text-slate-400 max-w-2xl mx-auto">
+                Watch how a 3x3 filter (kernel) scans across an input grid to extract features. Adjust Stride and Padding to see how they affect the output dimensions and calculations.
+            </p>
+        </header>
+
+        <!-- Controls -->
+        <div class="bg-slate-800 p-4 rounded-xl shadow-lg border border-slate-700 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex gap-4 items-center">
+                <div class="flex flex-col">
+                    <label class="text-xs text-slate-400 mb-1 uppercase tracking-wider font-semibold">Stride (Step Size)</label>
+                    <select id="strideSelect" class="bg-slate-900 border border-slate-600 text-white rounded p-2 outline-none focus:border-blue-500">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-xs text-slate-400 mb-1 uppercase tracking-wider font-semibold">Padding (Zero Borders)</label>
+                    <select id="paddingSelect" class="bg-slate-900 border border-slate-600 text-white rounded p-2 outline-none focus:border-blue-500">
+                        <option value="0">0 (Valid)</option>
+                        <option value="1">1 (Same)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex gap-2 items-center bg-slate-900 p-1.5 rounded-lg border border-slate-700">
+                <button id="btnPrev" class="p-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition-colors" title="Previous Step">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <button id="btnPlayPause" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded transition-colors min-w-[80px]">
+                    Play
+                </button>
+                <button id="btnNext" class="p-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded transition-colors" title="Next Step">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                </button>
+            </div>
+            
+            <div class="text-sm font-mono bg-slate-900 p-2 rounded border border-slate-700">
+                Output Size: <span id="outputSizeLabel" class="text-blue-400 font-bold"></span>
+            </div>
+        </div>
+
+        <!-- Visualizer Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            
+            <!-- Input Grid -->
+            <div class="flex flex-col items-center bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl overflow-x-auto w-full">
+                <h2 class="text-lg font-semibold mb-4 text-blue-300">Input Image (Pixels)</h2>
+                <div id="inputGrid" class="grid gap-1"></div>
+            </div>
+
+            <!-- Kernel Grid -->
+            <div class="flex flex-col items-center bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl w-full">
+                <h2 class="text-lg font-semibold mb-4 text-green-400">Filter (Kernel) 3x3</h2>
+                <div id="kernelGrid" class="grid grid-cols-3 gap-1 mb-4"></div>
+                <p class="text-xs text-slate-400 text-center">Looking for vertical edges</p>
+            </div>
+
+            <!-- Output Grid -->
+            <div class="flex flex-col items-center bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl overflow-x-auto w-full">
+                <h2 class="text-lg font-semibold mb-4 text-purple-400">Output Feature Map</h2>
+                <div id="outputGrid" class="grid gap-1"></div>
+            </div>
+
+        </div>
+
+        <!-- Math Breakdown -->
+        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
+            <h2 class="text-lg font-semibold mb-2 text-slate-200">Mathematical Breakdown (Dot Product)</h2>
+            <p class="text-sm text-slate-400 mb-4">Multiply overlapping pixels by weights, then sum them up.</p>
+            <div class="overflow-x-auto pb-4">
+                <div id="mathEquation" class="flex items-center space-x-2 text-lg font-mono whitespace-nowrap min-w-max">
+                    <!-- Equation injected here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Configuration & State ---
+        const BASE_INPUT_SIZE = 5;
+        const KERNEL_SIZE = 3;
+        
+        // Fixed specific values for predictable, recognizable output
+        const baseInputData = [
+            [0, 0, 0, 0, 0],
+            [0, 2, 2, 2, 0],
+            [0, 2, 2, 2, 0],
+            [0, 2, 2, 2, 0],
+            [0, 0, 0, 0, 0]
+        ];
+
+        // Vertical edge detector filter
+        const kernelData = [
+            [1, 0, -1],
+            [1, 0, -1],
+            [1, 0, -1]
+        ];
+
+        let state = {
+            stride: 1,
+            padding: 0,
+            step: 0,
+            isPlaying: false,
+            intervalId: null
+        };
+
+        let paddedInput = [];
+        let outputData = [];
+        let outputSize = 0;
+
+        // --- DOM Elements ---
+        const els = {
+            stride: document.getElementById('strideSelect'),
+            padding: document.getElementById('paddingSelect'),
+            btnPlay: document.getElementById('btnPlayPause'),
+            btnNext: document.getElementById('btnNext'),
+            btnPrev: document.getElementById('btnPrev'),
+            inputGrid: document.getElementById('inputGrid'),
+            kernelGrid: document.getElementById('kernelGrid'),
+            outputGrid: document.getElementById('outputGrid'),
+            mathEq: document.getElementById('mathEquation'),
+            outputSizeLabel: document.getElementById('outputSizeLabel')
+        };
+
+        // --- Initialization ---
+        function init() {
+            attachListeners();
+            updateDimensionsAndData();
+            renderStaticGrids();
+            updateStepView();
+        }
+
+        function attachListeners() {
+            els.stride.addEventListener('change', (e) => {
+                state.stride = parseInt(e.target.value);
+                resetAndRefresh();
+            });
+            els.padding.addEventListener('change', (e) => {
+                state.padding = parseInt(e.target.value);
+                resetAndRefresh();
+            });
+            els.btnPlay.addEventListener('click', togglePlay);
+            els.btnNext.addEventListener('click', stepForward);
+            els.btnPrev.addEventListener('click', stepBackward);
+        }
+
+        function resetAndRefresh() {
+            pause();
+            state.step = 0;
+            updateDimensionsAndData();
+            renderStaticGrids();
+            updateStepView();
+        }
+
+        // --- Core Logic ---
+        function updateDimensionsAndData() {
+            const P = state.padding;
+            const S = state.stride;
+            const W = BASE_INPUT_SIZE;
+            const K = KERNEL_SIZE;
+
+            // 1. Calculate new output size: O = floor((W - K + 2P) / S) + 1
+            outputSize = Math.floor((W - K + 2 * P) / S) + 1;
+            els.outputSizeLabel.innerText = `${outputSize} x ${outputSize}`;
+
+            // 2. Build padded input matrix
+            const paddedSize = W + 2 * P;
+            paddedInput = Array.from({ length: paddedSize }, () => Array(paddedSize).fill(0));
+            
+            for (let y = 0; y < W; y++) {
+                for (let x = 0; x < W; x++) {
+                    paddedInput[y + P][x + P] = baseInputData[y][x];
+                }
+            }
+
+            // 3. Pre-calculate output data matrix
+            outputData = Array.from({ length: outputSize }, () => Array(outputSize).fill(0));
+            
+            for (let outY = 0; outY < outputSize; outY++) {
+                for (let outX = 0; outX < outputSize; outX++) {
+                    let sum = 0;
+                    let startY = outY * S;
+                    let startX = outX * S;
+                    
+                    for (let ky = 0; ky < K; ky++) {
+                        for (let kx = 0; kx < K; kx++) {
+                            sum += paddedInput[startY + ky][startX + kx] * kernelData[ky][kx];
+                        }
+                    }
+                    outputData[outY][outX] = sum;
+                }
+            }
+        }
+
+        // --- Rendering ---
+        function renderStaticGrids() {
+            const P = state.padding;
+            
+            // Render Input (Padded)
+            els.inputGrid.style.gridTemplateColumns = `repeat(${paddedInput.length}, minmax(0, 1fr))`;
+            els.inputGrid.innerHTML = '';
+            for (let y = 0; y < paddedInput.length; y++) {
+                for (let x = 0; x < paddedInput[0].length; x++) {
+                    const isPadding = P > 0 && (y < P || y >= BASE_INPUT_SIZE + P || x < P || x >= BASE_INPUT_SIZE + P);
+                    const div = document.createElement('div');
+                    div.id = `in-${y}-${x}`;
+                    div.className = `grid-cell w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border rounded font-mono text-sm
+                        ${isPadding ? 'border-slate-600 text-slate-500 bg-slate-900/50' : 'border-blue-800 text-blue-100 bg-blue-900/30'}`;
+                    div.innerText = paddedInput[y][x];
+                    els.inputGrid.appendChild(div);
+                }
+            }
+
+            // Render Kernel
+            els.kernelGrid.innerHTML = '';
+            for (let y = 0; y < KERNEL_SIZE; y++) {
+                for (let x = 0; x < KERNEL_SIZE; x++) {
+                    const div = document.createElement('div');
+                    div.id = `kern-${y}-${x}`;
+                    div.className = `grid-cell w-10 h-10 flex items-center justify-center border border-green-700 bg-green-900/30 text-green-100 rounded font-mono text-sm font-bold`;
+                    div.innerText = kernelData[y][x];
+                    els.kernelGrid.appendChild(div);
+                }
+            }
+
+            // Render Output
+            els.outputGrid.style.gridTemplateColumns = `repeat(${outputSize}, minmax(0, 1fr))`;
+            els.outputGrid.innerHTML = '';
+            for (let y = 0; y < outputSize; y++) {
+                for (let x = 0; x < outputSize; x++) {
+                    const div = document.createElement('div');
+                    div.id = `out-${y}-${x}`;
+                    div.className = `grid-cell w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border border-purple-800 bg-purple-900/20 text-purple-200 rounded font-mono text-sm transition-all`;
+                    // Initially hide output until step reaches it
+                    div.innerText = '';
+                    els.outputGrid.appendChild(div);
+                }
+            }
+        }
+
+        function updateStepView() {
+            // Remove previous highlights
+            document.querySelectorAll('.highlight-input').forEach(el => el.classList.remove('highlight-input'));
+            document.querySelectorAll('.highlight-output').forEach(el => el.classList.remove('highlight-output'));
+            document.querySelectorAll('.highlight-kernel').forEach(el => el.classList.remove('highlight-kernel'));
+
+            const totalSteps = outputSize * outputSize;
+            if (totalSteps === 0) return;
+            
+            // Ensure step is in bounds
+            if (state.step >= totalSteps) {
+                pause();
+                state.step = totalSteps - 1; // Keep at end
+            }
+
+            const outY = Math.floor(state.step / outputSize);
+            const outX = state.step % outputSize;
+            
+            const startY = outY * state.stride;
+            const startX = outX * state.stride;
+
+            let equationParts = [];
+
+            // Highlight Input & Kernel, build math
+            for (let ky = 0; ky < KERNEL_SIZE; ky++) {
+                for (let kx = 0; kx < KERNEL_SIZE; kx++) {
+                    const inY = startY + ky;
+                    const inX = startX + kx;
+                    
+                    // Highlight Input Cell
+                    const inCell = document.getElementById(`in-${inY}-${inX}`);
+                    if (inCell) inCell.classList.add('highlight-input');
+
+                    // Highlight Kernel Cell
+                    const kernCell = document.getElementById(`kern-${ky}-${kx}`);
+                    if (kernCell) kernCell.classList.add('highlight-kernel');
+
+                    // Math part
+                    const inVal = paddedInput[inY][inX];
+                    const kernVal = kernelData[ky][kx];
+                    
+                    // Format color based on sign for readability
+                    const valColor = kernVal < 0 ? 'text-red-400' : (kernVal > 0 ? 'text-green-400' : 'text-slate-400');
+                    equationParts.push(`<span class="text-blue-300">${inVal}</span><span class="text-slate-500">×</span><span class="${valColor}">${kernVal}</span>`);
+                }
+            }
+
+            // Fill & Highlight Output up to current step
+            for(let i = 0; i <= state.step; i++){
+                const y = Math.floor(i / outputSize);
+                const x = i % outputSize;
+                const cell = document.getElementById(`out-${y}-${x}`);
+                if(cell) {
+                    cell.innerText = outputData[y][x];
+                    if(i === state.step) {
+                        cell.classList.add('highlight-output');
+                    }
+                }
+            }
+            // Clear future output cells if stepping backwards
+            for(let i = state.step + 1; i < totalSteps; i++){
+                 const y = Math.floor(i / outputSize);
+                 const x = i % outputSize;
+                 const cell = document.getElementById(`out-${y}-${x}`);
+                 if(cell) cell.innerText = '';
+            }
+
+            // Render Math Equation
+            const finalVal = outputData[outY][outX];
+            els.mathEq.innerHTML = `
+                <span class="text-slate-400">(</span>
+                ${equationParts.join(' <span class="text-slate-500">+</span> ')}
+                <span class="text-slate-400">)</span>
+                <span class="text-white mx-2">=</span>
+                <span class="text-purple-400 font-bold bg-purple-900/40 px-2 py-1 rounded border border-purple-500">${finalVal}</span>
+            `;
+        }
+
+        // --- Playback Controls ---
+        function togglePlay() {
+            if (state.isPlaying) {
+                pause();
+            } else {
+                play();
+            }
+        }
+
+        function play() {
+            if (state.step >= outputSize * outputSize - 1) {
+                state.step = -1; // Reset if at end
+            }
+            state.isPlaying = true;
+            els.btnPlay.innerText = "Pause";
+            els.btnPlay.classList.replace('bg-blue-600', 'bg-red-600');
+            els.btnPlay.classList.replace('hover:bg-blue-500', 'hover:bg-red-500');
+            
+            stepForward(); // take first step immediately
+            state.intervalId = setInterval(stepForward, 1200); // 1.2s per step
+        }
+
+        function pause() {
+            state.isPlaying = false;
+            clearInterval(state.intervalId);
+            els.btnPlay.innerText = "Play";
+            els.btnPlay.classList.replace('bg-red-600', 'bg-blue-600');
+            els.btnPlay.classList.replace('hover:bg-red-500', 'hover:bg-blue-500');
+        }
+
+        function stepForward() {
+            const totalSteps = outputSize * outputSize;
+            if (state.step < totalSteps - 1) {
+                state.step++;
+                updateStepView();
+            } else if (state.isPlaying) {
+                pause(); // Auto pause at end
+            }
+        }
+
+        function stepBackward() {
+            if (state.isPlaying) pause();
+            if (state.step > 0) {
+                state.step--;
+                updateStepView();
+            }
+        }
+
+        // Run on load
+        window.onload = init;
+    </script>
+</body>
+</html>
