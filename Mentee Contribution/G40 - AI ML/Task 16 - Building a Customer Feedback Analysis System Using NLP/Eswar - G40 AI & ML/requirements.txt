@@ -1,8 +1,0 @@
-pandas
-scikit-learn
-joblib
-spacy
-sentence-transformers
-transformers
-torch
-notebook

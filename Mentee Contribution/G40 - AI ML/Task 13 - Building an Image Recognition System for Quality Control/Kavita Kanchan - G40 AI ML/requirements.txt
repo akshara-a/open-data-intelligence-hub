@@ -1,6 +1,0 @@
-tensorflow
-matplotlib
-scikit-learn
-seaborn
-numpy
-ipykernel

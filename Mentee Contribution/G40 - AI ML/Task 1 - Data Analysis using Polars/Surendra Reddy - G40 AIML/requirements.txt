@@ -1,5 +1,0 @@
-polars
-pandas
-numpy
-matplotlib
-streamlit

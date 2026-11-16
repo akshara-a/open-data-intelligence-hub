@@ -1,8 +1,0 @@
-pandas
-numpy
-matplotlib
-scikit-learn
-joblib
-jupyter
-nbconvert
-ipykernel

@@ -1,6 +1,0 @@
-tensorflow-cpu
-numpy
-matplotlib
-pandas
-scikit-learn
-Pillow

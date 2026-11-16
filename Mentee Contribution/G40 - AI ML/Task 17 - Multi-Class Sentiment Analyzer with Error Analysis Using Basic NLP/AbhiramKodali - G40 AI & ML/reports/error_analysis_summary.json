@@ -1,8 +1,0 @@
-{
-  "total_errors": 3,
-  "error_types": {
-    "mixed_opinion": 1,
-    "sarcasm_or_irony": 1,
-    "negation": 1
-  }
-}
