@@ -1,0 +1,16 @@
+# Neo4j 5 (multi-arch image: runs natively on Apple Silicon)
+services:
+  neo4j:
+    image: neo4j:5.26-community
+    container_name: kgnav-neo4j
+    ports:
+      - "7474:7474"   # browser UI
+      - "7687:7687"   # bolt
+    environment:
+      NEO4J_AUTH: neo4j/kgnav-password
+      NEO4J_server_memory_heap_initial__size: 512m
+      NEO4J_server_memory_heap_max__size: 1g
+    volumes:
+      - neo4j_data:/data
+volumes:
+  neo4j_data:

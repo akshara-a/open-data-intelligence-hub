@@ -1,0 +1,22 @@
+[
+  {
+    "question": "If I deprecate the legacy-auth-module, which downstream API routes and frontend components will break?",
+    "must_include": ["POST /auth/login", "GET /auth/validate", "POST /v2/auth/token", "web-login-page", "web-checkout-page", "mobile-app-auth", "customer-portal"],
+    "must_not_include": ["admin-dashboard", "report-builder"]
+  },
+  {
+    "question": "Are there circular dependencies between our services?",
+    "must_include": ["order-service", "inventory-service", "notification-service"],
+    "must_not_include": ["reporting-service"]
+  },
+  {
+    "question": "Which services are single points of failure?",
+    "must_include": ["legacy-auth-service"],
+    "must_not_include": []
+  },
+  {
+    "question": "What is impacted if we change the schema of orders-db?",
+    "must_include": ["order-processing-module", "report-builder", "POST /orders"],
+    "must_not_include": ["payments-db"]
+  }
+]
