@@ -1,0 +1,70 @@
+{
+  "clauses": [
+    {
+      "clause_span": [
+        0,
+        84
+      ],
+      "clause_text": "Neithe party sholl be liale for any delay causcd by acts f od,war, flood or pndemic.",
+      "clause_label": "Force Majeure",
+      "confidence": 0.9982,
+      "entities": []
+    },
+    {
+      "clause_span": [
+        85,
+        184
+      ],
+      "clause_text": "Acme Corp. shall inemnify and hold harmless Globex Ltd. against all laims arising on 12 March 2025.",
+      "clause_label": "Indemnification",
+      "confidence": 0.9956,
+      "entities": [
+        {
+          "start": 85,
+          "end": 95,
+          "label": "ORG",
+          "text": "Acme Corp."
+        },
+        {
+          "start": 129,
+          "end": 140,
+          "label": "ORG",
+          "text": "Globex Ltd."
+        },
+        {
+          "start": 170,
+          "end": 183,
+          "label": "DATE",
+          "text": "12 March 2025"
+        }
+      ]
+    },
+    {
+      "clause_span": [
+        185,
+        262
+      ],
+      "clause_text": "Thetotal iabilit of Intech LC under this Agreemcnt shall not exceed $250,000.",
+      "clause_label": "UNCERTAIN",
+      "confidence": 0.6883,
+      "entities": [
+        {
+          "start": 253,
+          "end": 261,
+          "label": "MONEY",
+          "text": "$250,000"
+        }
+      ]
+    },
+    {
+      "clause_span": [
+        263,
+        314
+      ],
+      "clause_text": "his Agreement shall be goernedby the laws of India.",
+      "clause_label": "Other",
+      "confidence": 0.9974,
+      "entities": []
+    }
+  ]
+}
