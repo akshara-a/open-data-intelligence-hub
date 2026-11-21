@@ -1,0 +1,18 @@
+{
+    "project": "Legal Clause Classification and Entity Extraction",
+    "tokenization": "BPE Subword Tokenization",
+    "embedding": "Word2Vec",
+    "classification_model": "Bidirectional LSTM",
+    "entity_extraction": "Deterministic Rule-Based NER",
+    "training_epochs": 3,
+    "number_of_classes": 41,
+    "train_examples": 9690,
+    "validation_examples": 1831,
+    "test_examples": 2292,
+    "best_validation_accuracy": 0.4642271982523211,
+    "test_accuracy": 0.4511343804537522,
+    "weighted_precision": 0.4282368454374914,
+    "weighted_recall": 0.4511343804537522,
+    "weighted_f1": 0.41363186070246816,
+    "outputs_directory": "c:\\Users\\hp\\OneDrive\\Desktop\\open-data-intelligence-hub\\Mentee Contribution\\G41 - AI ML\\Task - 3 - Legal Clause Classification and Entity Extraction\\Hamsika-G41 AIML\\legal_nlp_outputs"
+}
