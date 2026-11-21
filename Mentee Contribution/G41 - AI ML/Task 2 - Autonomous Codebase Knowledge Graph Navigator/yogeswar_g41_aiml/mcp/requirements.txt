@@ -1,0 +1,6 @@
+fastapi>=0.110.0,<1.0.0
+uvicorn[standard]>=0.28.0,<1.0.0
+pydantic>=2.6.0,<3.0.0
+neo4j>=5.18.0,<6.0.0
+pyjwt[crypto]>=2.8.0,<3.0.0
+cryptography>=42.0.0,<51.0.0
