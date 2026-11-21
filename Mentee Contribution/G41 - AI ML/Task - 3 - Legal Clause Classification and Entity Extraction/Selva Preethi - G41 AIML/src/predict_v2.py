@@ -13,7 +13,7 @@ from model import BertBiLSTMCRF
 
 NER_MODEL_PATH = "ner_model.pt"
 CLAUSE_MODEL_DIR = "clause_model"
-CONFIDENCE_THRESHOLD = 0.00
+CONFIDENCE_THRESHOLD = 0.60
 
 
 def predict_clause(text, model_dir=CLAUSE_MODEL_DIR):
