@@ -1,0 +1,58 @@
+[
+    {
+        "timestamp": "2026-11-16T14:35:20.475283+00:00",
+        "asset_name": "laptops",
+        "jurisdiction": "US",
+        "rule_id": "US_COMPUTER_MACRS_5",
+        "status": "manual_review",
+        "requires_review": true
+    },
+    {
+        "timestamp": "2026-11-16T14:38:12.609666+00:00",
+        "asset_name": "laptops",
+        "jurisdiction": "US",
+        "rule_id": "US_COMPUTER_MACRS_5",
+        "status": "manual_review",
+        "requires_review": true
+    },
+    {
+        "timestamp": "2026-11-16T14:58:06.702954+00:00",
+        "asset_name": "servers",
+        "jurisdiction": "India",
+        "rule_id": "IND_SERVER_REVIEW",
+        "status": "manual_review",
+        "requires_review": true
+    },
+    {
+        "timestamp": "2026-11-16T15:08:56.719431+00:00",
+        "asset_name": "servers",
+        "jurisdiction": "India",
+        "rule_id": "IND_SERVER_REVIEW",
+        "status": "manual_review",
+        "requires_review": true
+    },
+    {
+        "timestamp": "2026-11-16T15:27:15.790075+00:00",
+        "asset_name": "servers",
+        "jurisdiction": "India",
+        "rule_id": "IND_SERVER_REVIEW",
+        "status": "manual_review",
+        "requires_review": true
+    },
+    {
+        "timestamp": "2026-11-16T17:03:47.962338+00:00",
+        "asset_name": "servers",
+        "jurisdiction": "India",
+        "rule_id": "IND_SERVER_REVIEW",
+        "status": "manual_review",
+        "requires_review": true
+    },
+    {
+        "timestamp": "2026-11-16T18:35:06.706615+00:00",
+        "asset_name": "servers",
+        "jurisdiction": "India",
+        "rule_id": "IND_SERVER_REVIEW",
+        "status": "manual_review",
+        "requires_review": true
+    }
+]
