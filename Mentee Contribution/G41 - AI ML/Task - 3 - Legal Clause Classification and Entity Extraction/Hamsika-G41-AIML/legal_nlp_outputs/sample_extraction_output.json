@@ -1,0 +1,39 @@
+{
+    "source_text": "\nThis Agreement is entered into on January 12, 2025 between\nABC Technologies Ltd. and XYZ Corporation.\n\nThe Contractor shall indemnify the Company against all claims\nand liabilities. Liability shall not exceed $50,000.\n",
+    "classification": {
+        "predicted_class": "Parties",
+        "confidence": 0.1634
+    },
+    "entities": [
+        {
+            "text": "January 12, 2025",
+            "label": "DATE",
+            "start": 35,
+            "end": 51
+        },
+        {
+            "text": "ABC Technologies Ltd",
+            "label": "ORG",
+            "start": 60,
+            "end": 80
+        },
+        {
+            "text": "and XYZ Corporation",
+            "label": "ORG",
+            "start": 82,
+            "end": 101
+        },
+        {
+            "text": "The Contractor shall indemnify the Company",
+            "label": "ORG",
+            "start": 104,
+            "end": 146
+        },
+        {
+            "text": "$50,000",
+            "label": "MONEY",
+            "start": 210,
+            "end": 217
+        }
+    ]
+}
