@@ -1,0 +1,9 @@
+pydantic>=2.6.0,<3.0.0
+neo4j>=5.18.0,<6.0.0
+tree-sitter>=0.21.0
+tree-sitter-python
+tree-sitter-javascript
+tree-sitter-typescript
+tree-sitter-go
+tree-sitter-java
+pytz
