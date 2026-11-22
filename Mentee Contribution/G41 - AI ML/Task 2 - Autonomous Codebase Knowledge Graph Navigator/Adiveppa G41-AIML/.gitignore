@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+README-local-backup.md

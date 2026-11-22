@@ -1,0 +1,11 @@
+neo4j>=5.14.0
+networkx>=3.0
+pydantic>=2.0
+pydantic-settings>=2.0
+fastapi>=0.100.0
+uvicorn>=0.20.0
+rich>=13.0
+pytest>=7.0
+httpx>=0.24.0
+python-dotenv>=1.0.0
+
