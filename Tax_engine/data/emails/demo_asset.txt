@@ -1,0 +1,4 @@
+Subject: Asset information
+
+Asset ID: DEMO-001
+Placed in Service Date: 2025-01-15
