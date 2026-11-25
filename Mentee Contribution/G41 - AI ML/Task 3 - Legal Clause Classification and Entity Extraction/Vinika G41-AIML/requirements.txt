@@ -1,0 +1,12 @@
+# Python 3.9 - 3.12 is recommended
+pandas
+numpy
+nltk
+scikit-learn
+matplotlib
+seaborn
+torch
+transformers
+spacy
+datasets
+# After installing, also run once:  python -m spacy download en_core_web_sm
