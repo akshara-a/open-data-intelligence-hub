@@ -1,0 +1,52 @@
+Train size: 640 | Test size: 160
+
+Training for 15 epochs (the test set is NOT used for training or tuning)
+
+===== BiLSTM results on the TEST set =====
+Accuracy       : 1.0
+Macro precision: 1.0
+Macro recall   : 1.0
+Macro F1       : 1.0
+
+Classification report (precision / recall / f1 per class):
+                         precision    recall  f1-score   support
+
+        Indemnification      1.000     1.000     1.000        40
+Limitation of Liability      1.000     1.000     1.000        40
+          Force Majeure      1.000     1.000     1.000        40
+                  Other      1.000     1.000     1.000        40
+
+               accuracy                          1.000       160
+              macro avg      1.000     1.000     1.000       160
+           weighted avg      1.000     1.000     1.000       160
+
+Confusion matrix (rows = true, columns = predicted):
+[[40  0  0  0]
+ [ 0 40  0  0]
+ [ 0  0 40  0]
+ [ 0  0  0 40]]
+
+Accuracy by data source (important for an honest picture):
+  synthetic (written by me) -> rows: 160 | accuracy: 1.0
+
+Number of mistakes on the test set: 0
+
+Effect of the confidence threshold (3 risk classes only):
+threshold | precision | recall | clauses flagged
+   0.0    |  1.0   | 1.0  | 120
+   0.5    |  1.0   | 1.0  | 120
+   0.7    |  1.0   | 1.0  | 120
+   0.9    |  1.0   | 1.0  | 120
+
+===== Comparison with the simple TF-IDF baseline =====
+BASELINE accuracy        : 1.0
+BASELINE macro precision : 1.0
+BiLSTM   accuracy        : 1.0
+BiLSTM   macro precision : 1.0
+
+HOW TO READ THESE RESULTS HONESTLY:
+ - Very high scores (for example above 95%) do NOT mean real-world accuracy. The synthetic clauses
+   come from only a few templates, and the same templates appear in train and test.
+ - Compare the real vs synthetic accuracy above. Real LEDGAR rows cover only some of the classes.
+ - If the TF-IDF baseline scores about the same, BERT + BiLSTM is not giving a measurable benefit here.
+ - There is no real test data for Limitation of Liability and Force Majeure (unless LEDGAR had them).

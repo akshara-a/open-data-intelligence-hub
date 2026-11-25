@@ -1,0 +1,63 @@
+{
+  "contract_id": "SAMPLE_CONTRACT",
+  "clauses_checked": 5,
+  "clauses": [
+    {
+      "text": "1. Indemnification. Harbor Analytics LLC shall indemnify and hold harmless Orion Software Inc. from any claim, loss or\nexpense arising out of a breach of this Agreement by Harbor Analytics LLC.",
+      "start": 97,
+      "end": 290,
+      "classification": "Indemnification",
+      "confidence": 0.9969,
+      "entities": [
+        {
+          "text": "Harbor Analytics",
+          "label": "ORG",
+          "start": 117,
+          "end": 133
+        },
+        {
+          "text": "Orion Software Inc.",
+          "label": "ORG",
+          "start": 172,
+          "end": 191
+        }
+      ]
+    },
+    {
+      "text": "2. Limitation of Liability. In no event shall Orion Software Inc. be liable for indirect or consequential damages, and\nits total liability shall not exceed $25,000.",
+      "start": 292,
+      "end": 456,
+      "classification": "Limitation of Liability",
+      "confidence": 0.9988,
+      "entities": [
+        {
+          "text": "Orion Software Inc.",
+          "label": "ORG",
+          "start": 338,
+          "end": 357
+        },
+        {
+          "text": "25,000",
+          "label": "MONEY",
+          "start": 449,
+          "end": 455
+        }
+      ]
+    },
+    {
+      "text": "3. Force Majeure. Neither party shall be liable for delays caused by floods, war or pandemic. The affected party must\nnotify the other within 10 days.",
+      "start": 458,
+      "end": 608,
+      "classification": "Force Majeure",
+      "confidence": 0.9973,
+      "entities": [
+        {
+          "text": "10 days",
+          "label": "DATE",
+          "start": 600,
+          "end": 607
+        }
+      ]
+    }
+  ]
+}
