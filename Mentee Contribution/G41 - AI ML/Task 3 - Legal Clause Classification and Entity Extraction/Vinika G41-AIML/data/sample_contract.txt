@@ -1,0 +1,12 @@
+SERVICES AGREEMENT between Orion Software Inc. and Harbor Analytics LLC, dated 1 February 2026.
+
+1. Indemnification. Harbor Analytics LLC shall indemnify and hold harmless Orion Software Inc. from any claim, loss or
+expense arising out of a breach of this Agreement by Harbor Analytics LLC.
+
+2. Limitation of Liability. In no event shall Orion Software Inc. be liable for indirect or consequential damages, and
+its total liability shall not exceed $25,000.
+
+3. Force Majeure. Neither party shall be liable for delays caused by floods, war or pandemic. The affected party must
+notify the other within 10 days.
+
+4. Governing Law. This Agreement is governed by the laws of India.
