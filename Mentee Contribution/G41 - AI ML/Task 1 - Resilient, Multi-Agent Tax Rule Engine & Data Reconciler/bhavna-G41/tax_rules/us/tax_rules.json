@@ -1,0 +1,25 @@
+{
+    "jurisdiction": "us",
+    "version": "1.0",
+    "tax_type": "business_asset_depreciation",
+    "law_reference": "IRS Publication 946",
+    "rules": [
+        {
+            "rule_id": "US_COMPUTER_MACRS_5",
+            "asset_category": "computer_equipment",
+            "asset_keywords": [
+                "laptop",
+                "computer",
+                "desktop"
+            ],
+            "depreciation_system": "GDS",
+            "method": "200% DB",
+            "recovery_period_years": 5,
+            "convention": "Half-Year",
+            "bonus_depreciation": "REQUIRES_ELIGIBILITY_CHECK",
+            "section_179": "REQUIRES_ELECTION_CHECK",
+            "source": "IRS Publication 946, MACRS",
+            "requires_review": true
+        }
+    ]
+}

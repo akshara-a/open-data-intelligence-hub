@@ -1,0 +1,54 @@
+{
+    "jurisdiction": "india",
+    "version": "1.0",
+    "tax_type": "business_asset_depreciation",
+    "currency": "INR",
+    "law_reference": "Income Tax Rules, Appendix I",
+    "effective_from": "2026-04-01",
+    "rules": [
+        {
+            "rule_id": "IND_COMPUTER_40",
+            "asset_category": "computer_equipment",
+            "asset_keywords": [
+                "laptop",
+                "computer",
+                "desktop"
+            ],
+            "method": "WDV",
+            "depreciation_rate": 0.40,
+            "first_year_usage_threshold_days": 180,
+            "half_rate_if_used_below_threshold": true,
+            "source": "Income Tax Rules, Appendix I, Part A, Machinery and Plant",
+            "requires_review": false
+        },
+        {
+            "rule_id": "IND_FURNITURE_10",
+            "asset_category": "furniture_and_fittings",
+            "asset_keywords": [
+                "office chair",
+                "chair",
+                "table",
+                "desk",
+                "furniture"
+            ],
+            "method": "WDV",
+            "depreciation_rate": 0.10,
+            "first_year_usage_threshold_days": 180,
+            "half_rate_if_used_below_threshold": true,
+            "source": "Income Tax Rules, Appendix I, Furniture and Fittings",
+            "requires_review": false
+        },
+        {
+            "rule_id": "IND_SERVER_REVIEW",
+            "asset_category": "server_equipment",
+            "asset_keywords": [
+                "server",
+                "servers"
+            ],
+            "method": "WDV",
+            "depreciation_rate": null,
+            "source": "Asset classification requires verification",
+            "requires_review": true
+        }
+    ]
+}
